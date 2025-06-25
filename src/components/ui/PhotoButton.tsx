@@ -70,7 +70,7 @@ const PhotoButton = () => {
                         gap={3}
                     >
                         <FaCamera />
-                        <Text>Camera</Text>
+                        <Text>Fotocamera</Text>
                     </Menu.Item>
                     <Menu.Item
                         value="gallery"

@@ -4,6 +4,6 @@ import tsconfigPaths from "vite-tsconfig-paths"
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: '/wedding-book/',
+  base: '/wedding-book-fe/',
   plugins: [react(), tsconfigPaths()],
 })

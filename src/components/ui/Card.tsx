@@ -1,6 +1,5 @@
-import { Text, Image, Box, VStack, Button, Dialog, Portal, CloseButton, Drawer, Icon } from '@chakra-ui/react'
+import { Text, Image, Box, VStack, Button, Portal, CloseButton, Drawer, Icon } from '@chakra-ui/react'
 import test from "@/assets/test3.jpg"
-import { CiHeart } from 'react-icons/ci'
 import { FaHeart, FaRegHeart } from 'react-icons/fa'
 import { useState } from 'react'
 

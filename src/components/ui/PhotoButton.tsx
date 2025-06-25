@@ -1,9 +1,9 @@
-import { Text, Button, Icon, Box, Flex } from '@chakra-ui/react'
+import { Text, Button, Icon } from '@chakra-ui/react'
 import { Menu } from '@chakra-ui/react'
 import { CiCamera } from 'react-icons/ci'
 import { FaCamera } from 'react-icons/fa6'
 import { GrGallery } from 'react-icons/gr'
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 
 const PhotoButton = () => {
     const cameraInputRef = useRef(null);
@@ -19,7 +19,7 @@ const PhotoButton = () => {
             (galleryInputRef.current as HTMLInputElement).click();
         }
     };
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+/*     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files && event.target.files[0];
         if (file) {
             const reader = new FileReader();
@@ -28,7 +28,7 @@ const PhotoButton = () => {
             };
             reader.readAsDataURL(file);
         }
-    };
+    }; */
 
     return (
         <Menu.Root>
@@ -95,14 +95,14 @@ const PhotoButton = () => {
                 capture="environment"
                 style={{ display: 'none' }}
                 ref={cameraInputRef}
-                onChange={handleFileChange}
+                /* onChange={handleFileChange} */
             />
             <input
                 type="file"
                 accept="image/*"
                 style={{ display: 'none' }}
                 ref={galleryInputRef}
-                onChange={handleFileChange}
+                /* onChange={handleFileChange} */
             />
         </Menu.Root>
     )

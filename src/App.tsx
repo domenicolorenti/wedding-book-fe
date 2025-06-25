@@ -1,5 +1,4 @@
-import { Text, Button, Image, VStack, Box, Grid, Icon } from '@chakra-ui/react'
-import logo from "@/assets/logo.svg"
+import { Text, VStack, Grid } from '@chakra-ui/react'
 import Card from './components/ui/Card'
 import PhotoButton from './components/ui/PhotoButton'
 

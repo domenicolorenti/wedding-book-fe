@@ -54,22 +54,24 @@ const Card = () => {
                             <Drawer.Title>Nome del fotografo</Drawer.Title>
                         </Drawer.Header>
                         <Drawer.Body>
-                            <Image
-                                src={test}
-                                aspectRatio={3 / 4}
-                                rounded="2xl"
-                            />
+                            <VStack>
+                                <Image
+                                    src={test}
+                                    aspectRatio={3 / 4}
+                                    rounded="2xl"
+                                />
+                                <Box w="full" py="2">
+                                    <Button outline="none" onClick={handleCLick}>
+                                        <Text fontSize="xl" display="flex" w="full" alignItems="center" gap={1}>
+                                            {liked ? <Icon as={FaHeart} color="red" boxSize={8} /> : <Icon as={FaRegHeart} boxSize={8} />}
+                                            {likeCount}
+                                        </Text>
+                                    </Button>
+                                </Box>
+                            </VStack>
                         </Drawer.Body>
-                        <Drawer.Footer>
-                            <Button w="full" px="4" py="1" outline="none" onClick={handleCLick}>
-                                <Text fontSize="xl" display="flex" w="full" alignItems="center" gap={1}>
-                                    {liked ? <Icon as={FaHeart} color="red" boxSize={8} /> : <Icon as={FaRegHeart} boxSize={8} />}
-                                    {likeCount}
-                                </Text>
-                            </Button>
-                        </Drawer.Footer>
                         <Drawer.CloseTrigger asChild>
-                            <CloseButton size="sm" />
+                            <CloseButton size="xl" color="gray.600" />
                         </Drawer.CloseTrigger>
                     </Drawer.Content>
                 </Drawer.Positioner>

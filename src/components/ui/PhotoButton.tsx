@@ -19,21 +19,23 @@ const PhotoButton = () => {
             (galleryInputRef.current as HTMLInputElement).click();
         }
     };
-/*     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files && event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                //setPreview(e.target?.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
-    }; */
+    /*     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+            const file = event.target.files && event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    //setPreview(e.target?.result as string);
+                };
+                reader.readAsDataURL(file);
+            }
+        }; */
 
     return (
         <Menu.Root>
             <Menu.Trigger asChild>
                 <Button
+                    bg="white"
+                    color="gray.900"
                     rounded="2xl"
                     shadow="md"
                     py={6}
@@ -44,7 +46,7 @@ const PhotoButton = () => {
                     outline={'none'}
                     _active={{ bg: 'orange.100', shadow: '2xl' }}
                 >
-                    <Icon as={CiCamera} boxSize={14}  />
+                    <Icon as={CiCamera} boxSize={14} />
                     <Text>Aggiungi una foto</Text>
                 </Button>
             </Menu.Trigger>
@@ -95,14 +97,14 @@ const PhotoButton = () => {
                 capture="environment"
                 style={{ display: 'none' }}
                 ref={cameraInputRef}
-                /* onChange={handleFileChange} */
+            /* onChange={handleFileChange} */
             />
             <input
                 type="file"
                 accept="image/*"
                 style={{ display: 'none' }}
                 ref={galleryInputRef}
-                /* onChange={handleFileChange} */
+            /* onChange={handleFileChange} */
             />
         </Menu.Root>
     )

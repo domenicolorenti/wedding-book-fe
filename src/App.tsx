@@ -28,7 +28,7 @@ function App() {
     <VStack
       bg="orange.50"
       px="4"
-      pt="8"
+      py="8"
       color="gray.700"
       fontFamily="Serif"
       minH="100vh"
@@ -74,6 +74,7 @@ function App() {
                 <Field.Label>Nome</Field.Label>
                 <Input
                   name="name"
+                  fontSize="16px"
                   onChange={(e) => setUsername(e.target.value)}
                   rounded="2xl"
                 />

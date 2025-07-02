@@ -9,8 +9,9 @@ const Card = (image: { id: number, name: string, src: string, likes: number }) =
     return (
         <Drawer.Root open={open} placement="bottom" onOpenChange={(e) => setOpen(e.open)}>
             <Drawer.Trigger asChild>
-
                 <Button
+                    bg="white"
+                    color="gray.900"
                     rounded="2xl"
                     shadow="md"
                     p={0}
@@ -21,8 +22,11 @@ const Card = (image: { id: number, name: string, src: string, likes: number }) =
                     <VStack
                         gap={0}
                         w="full"
+                        position="relative"
                     >
+                        <Box w="full" h="full" pos="absolute" />
                         <Image
+                            loading="lazy"
                             roundedTop="2xl"
                             aspectRatio={4 / 3}
                             src={image.src}
@@ -38,10 +42,10 @@ const Card = (image: { id: number, name: string, src: string, likes: number }) =
             </Drawer.Trigger>
             <Portal>
                 <Drawer.Backdrop />
-                <Drawer.Positioner padding={2}>
+                <Drawer.Positioner >
                     <Drawer.Content
                         bg="white"
-                        rounded="2xl"
+                        roundedTop="2xl"
                         color="gray.900"
                     >
                         <Drawer.Body>

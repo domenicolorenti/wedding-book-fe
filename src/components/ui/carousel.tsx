@@ -37,7 +37,9 @@ export const ImageCarousel = (props: { image: { id: number } }) => {
                     <VStack
                         key={image.id}
                         className="keen-slider__slide"
-                        gap={2}>
+                        gap={2}
+                    >
+                        <Box w="full" h="full" pos="absolute" />
                         <Text
                             py="4"
                             textAlign="left"
@@ -51,11 +53,16 @@ export const ImageCarousel = (props: { image: { id: number } }) => {
                         <Image
                             src={image.src}
                             aspectRatio={3 / 4}
-                            maxH="65vh"
+                            maxH="68vh"
                             rounded="2xl"
                         />
                         <Box w="full" py="2">
-                            <Button outline="none" onClick={handleCLick}>
+                            <Button
+                                bg="white"
+                                color="gray.900"
+                                outline="none"
+                                onClick={handleCLick}
+                            >
                                 <Text fontSize="xl" display="flex" w="full" alignItems="center" gap={1}>
                                     {liked ? <Icon as={FaHeart} color="red" boxSize={8} /> : <Icon as={FaRegHeart} boxSize={8} />}
                                     {image.likes}

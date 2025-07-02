@@ -1,21 +1,15 @@
-import { Text, Image, Box, VStack, Button, Portal, CloseButton, Drawer, Icon } from '@chakra-ui/react'
-import test from "@/assets/test3.jpg"
-import { FaHeart, FaRegHeart } from 'react-icons/fa'
+import { Text, Image, Box, VStack, Button, Portal, CloseButton, Drawer, AspectRatio } from '@chakra-ui/react'
+import { FaRegHeart } from 'react-icons/fa'
 import { useState } from 'react'
+import { ImageCarousel } from './carousel'
 
-const Card = () => {
-    const [open, setOpen] = useState(false)
-    const [liked, setLiked] = useState(false)
-    const [likeCount, setLikeCount] = useState(0)
-
-    const handleCLick = () => {
-        setLiked(true);
-        setLikeCount(likeCount + 1)
-    }
+const Card = (image: { id: number, name: string, src: string, likes: number }) => {
+    const [open, setOpen] = useState(false);
 
     return (
         <Drawer.Root open={open} placement="bottom" onOpenChange={(e) => setOpen(e.open)}>
             <Drawer.Trigger asChild>
+
                 <Button
                     rounded="2xl"
                     shadow="md"
@@ -30,13 +24,13 @@ const Card = () => {
                     >
                         <Image
                             roundedTop="2xl"
-                            src={test}
                             aspectRatio={4 / 3}
+                            src={image.src}
                         />
                         <Box w="full" px="4" py="1">
                             <Text fontSize="xl" display="flex" alignItems="center" gap={1}>
                                 <FaRegHeart />
-                                24
+                                {image.likes}
                             </Text>
                         </Box>
                     </VStack>
@@ -50,25 +44,10 @@ const Card = () => {
                         rounded="2xl"
                         color="gray.900"
                     >
-                        <Drawer.Header>
-                            <Drawer.Title>Nome del fotografo</Drawer.Title>
-                        </Drawer.Header>
                         <Drawer.Body>
-                            <VStack>
-                                <Image
-                                    src={test}
-                                    aspectRatio={3 / 4}
-                                    rounded="2xl"
-                                />
-                                <Box w="full" py="2">
-                                    <Button outline="none" onClick={handleCLick}>
-                                        <Text fontSize="xl" display="flex" w="full" alignItems="center" gap={1}>
-                                            {liked ? <Icon as={FaHeart} color="red" boxSize={8} /> : <Icon as={FaRegHeart} boxSize={8} />}
-                                            {likeCount}
-                                        </Text>
-                                    </Button>
-                                </Box>
-                            </VStack>
+                            <ImageCarousel image={{
+                                id: image.id
+                            }} />
                         </Drawer.Body>
                         <Drawer.CloseTrigger asChild>
                             <CloseButton size="xl" color="gray.600" />

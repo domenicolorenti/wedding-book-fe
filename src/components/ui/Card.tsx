@@ -1,7 +1,7 @@
-import { Text, Image, Box, VStack, Button, Portal, CloseButton, Drawer, AspectRatio } from '@chakra-ui/react'
+import { Text, Image, Box, VStack, Button, Portal, CloseButton, Drawer } from '@chakra-ui/react'
 import { FaRegHeart } from 'react-icons/fa'
 import { useState } from 'react'
-import { ImageCarousel } from './carousel'
+import { ImageCarousel } from '.';
 
 const Card = (image: { id: number, name: string, src: string, likes: number }) => {
     const [open, setOpen] = useState(false);

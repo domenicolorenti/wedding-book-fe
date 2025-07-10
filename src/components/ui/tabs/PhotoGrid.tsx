@@ -2,13 +2,13 @@ import { Grid } from '@chakra-ui/react'
 import { Card } from '..'
 
 interface Image {
-    id: number,
-    name: string,
-    src: string,
-    likes: number
+    _id: string;
+    name: string;
+    src: string; // o "url"
+    likes: number;
 }
 
-const PhotoGrid = (props: {images: Image[]}) => {
+const PhotoGrid = (props: { images: Image[] }) => {
     return (
         <Grid
             borderTopWidth={1}
@@ -21,7 +21,7 @@ const PhotoGrid = (props: {images: Image[]}) => {
             templateColumns="repeat(2, 1fr)"
         >
             {props.images.map((image) => (
-                <Card {...image} />
+                <Card {...image} key={image._id} />
             ))}
 
         </Grid>

@@ -9,7 +9,7 @@ const Home = (props: { username: string }) => {
 
     useEffect(() => {
         if (!props.username) {
-            navigate("/login")
+            navigate("/wedding-book-fe/login")
         }
     }, [])
 

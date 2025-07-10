@@ -4,6 +4,10 @@ import { CiCamera } from 'react-icons/ci'
 import { FaCamera } from 'react-icons/fa6'
 import { GrGallery } from 'react-icons/gr'
 import { useRef } from 'react'
+import { compressImage } from '@/utils/imageCompression'
+import axios from 'axios'
+
+const URL = import.meta.env.VITE_BE_URL;
 
 const PhotoButton = () => {
     const cameraInputRef = useRef(null);
@@ -14,21 +18,38 @@ const PhotoButton = () => {
             (cameraInputRef.current as HTMLInputElement).click();
         }
     };
+
     const handleGallery = () => {
         if (galleryInputRef.current) {
             (galleryInputRef.current as HTMLInputElement).click();
         }
     };
-    /*     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-            const file = event.target.files && event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    //setPreview(e.target?.result as string);
-                };
-                reader.readAsDataURL(file);
+
+    const savePhoto = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files && event.target.files[0];
+        if (file) {
+            try {
+                const compFile = await compressImage(file);
+                const username = localStorage.getItem("wedding_username") ?? "";
+
+                const formData = new FormData();
+                formData.append("username", username);
+                formData.append("file", compFile);
+
+                const response = await axios.post(`${URL}/addPhoto`, formData, {
+                    headers: {
+                        "Content-Type": "multipart/form-data",
+                    },
+                });
+
+                if (response.status === 200) {
+                    console.log("Image uploaded!")
+                }
+            } catch (error) {
+                console.error(error);
             }
-        }; */
+        }
+    };
 
     return (
         <Menu.Root>
@@ -97,14 +118,14 @@ const PhotoButton = () => {
                 capture="environment"
                 style={{ display: 'none' }}
                 ref={cameraInputRef}
-            /* onChange={handleFileChange} */
+                onChange={savePhoto}
             />
             <input
                 type="file"
                 accept="image/*"
                 style={{ display: 'none' }}
                 ref={galleryInputRef}
-            /* onChange={handleFileChange} */
+                onChange={savePhoto}
             />
         </Menu.Root>
     )

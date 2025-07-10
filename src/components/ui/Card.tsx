@@ -2,8 +2,18 @@ import { Text, Image, Box, VStack, Button, Portal, CloseButton, Drawer } from '@
 import { FaRegHeart } from 'react-icons/fa'
 import { useState } from 'react'
 import { ImageCarousel } from '.';
+import axios from 'axios';
 
-const Card = (image: { id: number, name: string, src: string, likes: number }) => {
+const URL = import.meta.env.VITE_BE_URL;
+
+interface Image {
+    _id: string;
+    name: string;
+    src: string; // o "url"
+    likes: number;
+}
+
+const Card = (props: Image) => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -29,12 +39,12 @@ const Card = (image: { id: number, name: string, src: string, likes: number }) =
                             loading="lazy"
                             roundedTop="2xl"
                             aspectRatio={4 / 3}
-                            src={image.src}
+                            src={`${URL}/download/${props._id}`}
                         />
                         <Box w="full" px="4" py="1">
                             <Text fontSize="xl" display="flex" alignItems="center" gap={1}>
                                 <FaRegHeart />
-                                {image.likes}
+                                {props.likes}
                             </Text>
                         </Box>
                     </VStack>
@@ -49,9 +59,10 @@ const Card = (image: { id: number, name: string, src: string, likes: number }) =
                         color="gray.900"
                     >
                         <Drawer.Body>
-                            <ImageCarousel image={{
-                                id: image.id
-                            }} />
+                            {/* <ImageCarousel image={{
+                                id: image._id,
+                                src: image.src
+                            }} /> */}
                         </Drawer.Body>
                         <Drawer.CloseTrigger asChild>
                             <CloseButton size="xl" color="gray.600" />

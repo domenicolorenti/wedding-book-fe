@@ -5,20 +5,20 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Home } from './pages';
 
 function App() {
-  const [username, setUsername] = useState("Turi");
+  const [username, setUsername] = useState("");
 
   const navigate = useNavigate();
 
-/*   useEffect(() => {
+  useEffect(() => {
     const saved = localStorage.getItem("wedding_username");
     if (saved) {
       setUsername(saved);
-      navigate("/wedding-book-fe/")
+      navigate("/wedding-book-fe")
     } else {
       setUsername("")
       navigate("/wedding-book-fe/login")
     }
-  }, []); */
+  }, []);
 
   return (
     <VStack

@@ -1,21 +1,23 @@
-import { Text, VStack, Grid } from '@chakra-ui/react'
-import { useEffect, useState } from 'react';
+import { Text, VStack, Grid, Box, Flex } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react';
 import Login from './pages/Login';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import { Home } from './pages';
 
+export const UserContext = React.createContext<string>("")
+
 function App() {
-  const [username, setUsername] = useState("");
+  const [user, setUser] = useState("");
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const saved = localStorage.getItem("wedding_username");
     if (saved) {
-      setUsername(saved);
+      setUser(saved);
       navigate("/wedding-book-fe")
     } else {
-      setUsername("")
+      setUser("")
       navigate("/wedding-book-fe/login")
     }
   }, []);
@@ -28,19 +30,24 @@ function App() {
       fontFamily="Serif"
       minH="100vh"
     >
-      {/* <Image
+      <UserContext value={user}>
+        {/* <Image
         w="80%"
         src={logo}
       /> */}
-      <Text
-        fontSize="5xl"
-      >
-        Wedding Book
-      </Text>
-      <Routes>
-        <Route path="/wedding-book-fe/login" element={<Login setUsername={setUsername} username={username} />} />
-        <Route path='/wedding-book-fe/' element={<Home username={username} />} />
-      </Routes>
+        <Flex>
+          Benvenuto/a <Text ml="1" fontWeight={'bold'}>{user}</Text>!
+        </Flex>
+        <Text
+          fontSize="5xl"
+        >
+          Wedding Book
+        </Text>
+        <Routes>
+          <Route path="/wedding-book-fe/login" element={<Login setUser={setUser} />} />
+          <Route path='/wedding-book-fe/' element={<Home />} />
+        </Routes>
+      </UserContext>
     </VStack >
   )
 }

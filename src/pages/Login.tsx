@@ -3,18 +3,16 @@ import axios from 'axios';
 import { useState, type Dispatch, type SetStateAction } from 'react'
 import { useNavigate } from 'react-router-dom';
 
-const Login = (props: {
-    setUsername: Dispatch<SetStateAction<string>>,
-    username: string
-}) => {
+const Login = (props: { setUser: Dispatch<SetStateAction<string>> }) => {
     const navigate = useNavigate();
     const [label, setLabel] = useState("");
+    const [insertUser, setInsertUser] = useState("");
 
     const URL = import.meta.env.VITE_BE_URL;
 
     const login = async () => {
         try {
-            const username = props.username.trim()
+            const username = insertUser.trim().toLowerCase()
 
             if (username === null || username === "") {
                 setLabel("Inserisci il nome per continuare")
@@ -22,9 +20,9 @@ const Login = (props: {
 
             const response = await axios.post(`${URL}/addUser`, { username });
             if (response.status === 201) {
-                localStorage.setItem("wedding_username", props.username.trim());
-                props.setUsername(username);
-                navigate("/")
+                localStorage.setItem("wedding_username", username);
+                props.setUser(username);
+                navigate("/wedding-book-fe")
             }
         } catch (error: any) {
             if (axios.isAxiosError(error) && error.response) {
@@ -38,7 +36,7 @@ const Login = (props: {
                     alert("Generic Server error")
                 }
             }
-            if( error.code === "ERR_NETWORK" || error.message === "Network Error" ) {
+            if (error.code === "ERR_NETWORK" || error.message === "Network Error") {
                 alert("Server non raggiungibile")
             }
             console.log(error)
@@ -77,7 +75,7 @@ const Login = (props: {
                         <Input
                             name="name"
                             fontSize="16px"
-                            onChange={(e) => props.setUsername(e.target.value)}
+                            onChange={(e) => setInsertUser(e.target.value)}
                             rounded="2xl"
                             type='text'
                         />

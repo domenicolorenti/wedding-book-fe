@@ -1,58 +1,47 @@
-import { Spinner, VStack } from '@chakra-ui/react'
+import { Button, Spinner, VStack } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { Menu } from './Menu'
 import PhotoGrid from './PhotoGrid'
 import axios from 'axios'
+import React from 'react'
+import { type Image } from "@/types"
+import { TbRefresh } from 'react-icons/tb'
 
 const URL = import.meta.env.VITE_BE_URL;
 
-interface Image {
-    _id: string;
-    name: string;
-    src: string; // o "url"
-    likes: number;
-}
+export const ImagesContex = React.createContext<Image[]>([]);
 
-
-const Tabs = (props: { username: string }) => {
+const Tabs = () => {
     const [active, setActive] = useState("Home");
     const [loading, setLoading] = useState(true);
     const [images, setImages] = useState<Image[]>([]);
 
-    useEffect(() => {
-        const fetchImages = async () => {
-            try {
-                const res = await axios.get(`${URL}/getPhotos`);
-                setImages(res.data.data.slice().reverse());
-            } catch (err) {
-                console.error(err);
-            } finally {
-                setLoading(false);
-            }
-        };
-        fetchImages();
-    }, []);
-
-
-
-    const filteredImages = () => {
-        if (!images) return [];
-        if (active === "Home") {
-            return images;
+    const fetchImages = async () => {
+        try {
+            const res = await axios.get(`${URL}/getPhotos`);
+            setImages(res.data.data.slice().reverse());
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
         }
-        return images.filter((image) => image.name === props.username);
-    }
+    };
 
+    useEffect(() => {
+        fetchImages()
+    }, []);
 
     return (
         <VStack
             w="full"
         >
-            <Menu setActive={setActive} />
+            <Menu setActive={setActive} active={active} fetchImages={fetchImages}/>
             {loading ? (
                 <Spinner mt="4" size="xl" />
             ) : (
-                <PhotoGrid images={filteredImages()} />
+                <ImagesContex value={images}>
+                    <PhotoGrid active={active} />
+                </ImagesContex>
             )}
 
         </VStack>

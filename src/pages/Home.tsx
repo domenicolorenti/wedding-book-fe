@@ -1,14 +1,16 @@
+import { UserContext } from '@/App'
 import { Tabs } from '@/components/ui'
 import PhotoButton from '@/components/ui/PhotoButton'
 import { VStack, Text } from '@chakra-ui/react'
-import { useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const Home = (props: { username: string }) => {
+const Home = () => {
     const navigate = useNavigate()
+    const user = useContext(UserContext);
 
     useEffect(() => {
-        if (!props.username) {
+        if (!user) {
             navigate("/wedding-book-fe/login")
         }
     }, [])
@@ -32,7 +34,7 @@ const Home = (props: { username: string }) => {
             >
                 Le Foto
             </Text>
-            <Tabs username={props.username}/>
+            <Tabs />
 
         </VStack >
     )

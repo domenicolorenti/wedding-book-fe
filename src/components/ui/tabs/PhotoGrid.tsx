@@ -1,27 +1,32 @@
 import { Grid } from '@chakra-ui/react'
 import { Card } from '..'
+import { ImagesContex } from './Tabs';
+import { useContext } from 'react';
+import { UserContext } from '@/App';
+import { type Image } from "@/types"
 
-interface Image {
-    _id: string;
-    name: string;
-    src: string; // o "url"
-    likes: number;
-}
+const PhotoGrid = (props: { active: string }) => {
+    const images = useContext(ImagesContex);
+    const user = useContext(UserContext);
 
-const PhotoGrid = (props: { images: Image[] }) => {
+    const filteredImages = () => {
+        if (!images) return [];
+        if (props.active === "Home") {
+            return images;
+        }
+        console.log(images.find);
+        return images.filter((image: Image) => image.user === user);
+    }
+
     return (
         <Grid
-            borderTopWidth={1}
-            borderColor="gray.300"
-            rounded="4xl"
             w="full"
-            py={4}
-            px="4"
+            p={4}
             gap={4}
             templateColumns="repeat(2, 1fr)"
         >
-            {props.images.map((image) => (
-                <Card {...image} key={image._id} />
+            {filteredImages().map((image: Image, index: number) => (
+                <Card key={index} index={index} {...image}/>
             ))}
 
         </Grid>

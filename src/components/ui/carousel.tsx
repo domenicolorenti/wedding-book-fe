@@ -1,23 +1,38 @@
 // components/ImageCarousel.jsx
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Box, Image, Text, VStack, Button, Icon } from "@chakra-ui/react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
-import { images } from "@/mooks";
+import { ImagesContex } from "./tabs/Tabs";
+import { UserContext } from "@/App";
+import axios from "axios";
 
+const URL = import.meta.env.VITE_BE_URL;
 
+export const ImageCarousel = (props: { index: number }) => {
+    const [liked, setLiked] = useState(false);
+    const user = useContext(UserContext);
+    const images = useContext(ImagesContex);
 
-export const ImageCarousel = (props: { image: { id: number } }) => {
-    const [liked, setLiked] = useState(false)
-    const [likeCount, setLikeCount] = useState(0)
-
-    const handleCLick = () => {
-        setLiked(true);
-        setLikeCount(likeCount + 1)
+    const handleCLick = async () => {
+        var url = "";
+        if(liked) {
+            url = `${URL}/unlike`
+        } else {
+            url = `${URL}/like`
+        }
+        const res = await axios.get(url, );
     }
 
-    const initialIndex = images.findIndex((img) => img.id === props.image.id);
+    useEffect(() => {
+        const image = images[props.index];
+        if (image.likes.includes(user)) {
+            setLiked(true);
+        }
+    }, [])
+
+    const initialIndex = props.index;
     const [sliderRef] = useKeenSlider({
         loop: true,
         initial: initialIndex >= 0 ? initialIndex : 0,
@@ -33,9 +48,9 @@ export const ImageCarousel = (props: { image: { id: number } }) => {
             overflow="hidden"
         >
             <Box ref={sliderRef} className="keen-slider">
-                {images.map((image) => (
+                {images.map((image, index) => (
                     <VStack
-                        key={image.id}
+                        key={index}
                         className="keen-slider__slide"
                         gap={2}
                     >
@@ -48,57 +63,32 @@ export const ImageCarousel = (props: { image: { id: number } }) => {
                             fontFamily="Serif"
                             w="full"
                         >
-                            {image.name}
+                            {image.user}
                         </Text>
                         <Image
-                            src={image.src}
+                            src={`${URL}/download/${image._id}`}
                             aspectRatio={3 / 4}
                             maxH="68vh"
                             rounded="2xl"
+                            loading="lazy"
                         />
                         <Box w="full" py="2">
                             <Button
                                 bg="white"
                                 color="gray.900"
                                 outline="none"
-                                onClick={handleCLick}
+                                onClick={() =>
+                                    console.log("image: ", image)}
                             >
                                 <Text fontSize="xl" display="flex" w="full" alignItems="center" gap={1}>
                                     {liked ? <Icon as={FaHeart} color="red" boxSize={8} /> : <Icon as={FaRegHeart} boxSize={8} />}
-                                    {image.likes}
+                                    {image.likes.length}
                                 </Text>
                             </Button>
                         </Box>
                     </VStack>
                 ))}
             </Box>
-
-            {/* Arrows */}
-            {/* <Flex
-        justify="space-between"
-        position="absolute"
-        top="50%"
-        width="100%"
-        transform="translateY(-50%)"
-        px={2}
-      >
-        <IconButton
-          aria-label="Previous"
-          icon={<FaChevronLeft />}
-          onClick={() => slider.current?.prev()}
-          bg="rgba(0,0,0,0.4)"
-          color="white"
-          _hover={{ bg: "rgba(0,0,0,0.6)" }}
-        />
-        <IconButton
-          aria-label="Next"
-          icon={<FaChevronRight />}
-          onClick={() => slider.current?.next()}
-          bg="rgba(0,0,0,0.4)"
-          color="white"
-          _hover={{ bg: "rgba(0,0,0,0.6)" }}
-        />
-      </Flex> */}
-        </Box>
+        </Box >
     );
 }

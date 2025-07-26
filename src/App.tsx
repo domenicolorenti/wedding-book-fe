@@ -43,10 +43,15 @@ function App() {
         >
           Wedding Book
         </Text>
-        <Routes>
+        {/* <Routes>
           <Route path="/wedding-book-fe/login" element={<Login setUser={setUser} />} />
           <Route path='/wedding-book-fe/' element={<Home />} />
-        </Routes>
+        </Routes> */}
+        {user==="" ? (
+          <Login setUser={setUser} />
+        ) : (
+          <Home />
+        )}
       </UserContext>
     </VStack >
   )

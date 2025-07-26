@@ -15,22 +15,31 @@ export const ImageCarousel = (props: { index: number }) => {
     const user = useContext(UserContext);
     const images = useContext(ImagesContex);
 
-    const handleCLick = async () => {
-        var url = "";
-        if(liked) {
-            url = `${URL}/unlike`
-        } else {
-            url = `${URL}/like`
+    const handleClick = async () => {
+        const imageId = images[props.index]._id;
+        const url = liked
+            ? `${URL}/unlike/${user}/${imageId}`
+            : `${URL}/like/${user}/${imageId}`;
+
+        try {
+            await axios.get(url);
+            setLiked(!liked);
+
+            // Update like count locally
+            images[props.index].likes = liked
+                ? images[props.index].likes.filter((u) => u !== user)
+                : [...images[props.index].likes, user];
+        } catch (error) {
+            console.error("Like/unlike failed:", error);
         }
-        const res = await axios.get(url, );
-    }
+    };
+
 
     useEffect(() => {
         const image = images[props.index];
-        if (image.likes.includes(user)) {
-            setLiked(true);
-        }
-    }, [])
+        setLiked(image.likes.includes(user));
+    }, [images, props.index, user]);
+
 
     const initialIndex = props.index;
     const [sliderRef] = useKeenSlider({
@@ -77,8 +86,7 @@ export const ImageCarousel = (props: { index: number }) => {
                                 bg="white"
                                 color="gray.900"
                                 outline="none"
-                                onClick={() =>
-                                    console.log("image: ", image)}
+                                onClick={handleClick}
                             >
                                 <Text fontSize="xl" display="flex" w="full" alignItems="center" gap={1}>
                                     {liked ? <Icon as={FaHeart} color="red" boxSize={8} /> : <Icon as={FaRegHeart} boxSize={8} />}

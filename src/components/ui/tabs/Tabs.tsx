@@ -5,7 +5,6 @@ import PhotoGrid from './PhotoGrid'
 import axios from 'axios'
 import React from 'react'
 import { type Image } from "@/types"
-import { TbRefresh } from 'react-icons/tb'
 
 const URL = import.meta.env.VITE_BE_URL;
 
@@ -19,13 +18,17 @@ const Tabs = () => {
     const fetchImages = async () => {
         try {
             const res = await axios.get(`${URL}/getPhotos`);
-            setImages(res.data.data.slice().reverse());
+            const sortedImages = res.data.data
+                .slice()
+                .sort((a: { likes: string | any[] }, b: { likes: string | any[] }) => b.likes.length - a.likes.length); // descending order
+            setImages(sortedImages);
         } catch (err) {
             console.error(err);
         } finally {
             setLoading(false);
         }
     };
+
 
     useEffect(() => {
         fetchImages()
@@ -35,7 +38,7 @@ const Tabs = () => {
         <VStack
             w="full"
         >
-            <Menu setActive={setActive} active={active} fetchImages={fetchImages}/>
+            <Menu setActive={setActive} active={active} fetchImages={fetchImages} />
             {loading ? (
                 <Spinner mt="4" size="xl" />
             ) : (

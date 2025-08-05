@@ -23,8 +23,6 @@ export const Menu = (props: { setActive: Dispatch<SetStateAction<string>>; activ
             w="80%"
             gap={"1px"}
             px={1}
-            borderBottomWidth={1}
-            borderColor="gray.200"
             h="42px"
             templateColumns="repeat(7, 1fr)"
         >
@@ -45,9 +43,6 @@ export const Menu = (props: { setActive: Dispatch<SetStateAction<string>>; activ
                 rounded="2xl"
                 w="full"
                 h="full"
-                _active={{
-                    shadow: "sm",
-                }}
                 onClick={() => props.fetchImages()}
             ><TbRefresh /></Button>
         </Grid>
@@ -58,19 +53,16 @@ const MyButton = (props: { value: string; icon: IconType; text: string; setActiv
     const Icon = props.icon;
     return (
         <Button
-            bg="white"
+            bg={props.value === props.active ? "#D8BFA4" : "white"}
             color="gray.900"
             fontSize="xl"
             roundedTop="2xl"
             roundedBottom="0"
-            borderWidth={props.value === props.active ? 1 : 0}
-            borderBottomWidth={0}
+            borderWidth={0}
+            borderBottomWidth={props.value === props.active ? 0 : 1}
             borderColor="gray.200"
             w="full"
             h="full"
-            _active={{
-                shadow: "sm",
-            }}
             onClick={() => props.setActive(props.value)}
         >
             <Icon />

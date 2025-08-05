@@ -1,4 +1,4 @@
-import { Button, Spinner, VStack } from '@chakra-ui/react'
+import { Spinner, VStack } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import { Menu } from './Menu'
 import PhotoGrid from './PhotoGrid'
@@ -20,7 +20,7 @@ const Tabs = () => {
             const res = await axios.get(`${URL}/getPhotos`);
             const sortedImages = res.data.data
                 .slice()
-                .sort((a: { likes: string | any[] }, b: { likes: string | any[] }) => b.likes.length - a.likes.length); // descending order
+                .reverse();
             setImages(sortedImages);
         } catch (err) {
             console.error(err);

@@ -14,9 +14,10 @@ export const ImageCarousel = (props: { index: number }) => {
     const [liked, setLiked] = useState(false);
     const user = useContext(UserContext);
     const images = useContext(ImagesContex);
+    const [index, setIndex] = useState(props.index)
 
     const handleClick = async () => {
-        const imageId = images[props.index]._id;
+        const imageId = images[index]._id;
         const url = liked
             ? `${URL}/unlike/${user}/${imageId}`
             : `${URL}/like/${user}/${imageId}`;
@@ -26,9 +27,9 @@ export const ImageCarousel = (props: { index: number }) => {
             setLiked(!liked);
 
             // Update like count locally
-            images[props.index].likes = liked
-                ? images[props.index].likes.filter((u) => u !== user)
-                : [...images[props.index].likes, user];
+            images[index].likes = liked
+                ? images[index].likes.filter((u) => u !== user)
+                : [...images[index].likes, user];
         } catch (error) {
             console.error("Like/unlike failed:", error);
         }
@@ -36,19 +37,20 @@ export const ImageCarousel = (props: { index: number }) => {
 
 
     useEffect(() => {
-        const image = images[props.index];
+        const image = images[index];
         setLiked(image.likes.includes(user));
-    }, [images, props.index, user]);
+    }, [images, index, user]);
 
 
-    const initialIndex = props.index;
     const [sliderRef] = useKeenSlider({
         loop: true,
-        initial: initialIndex >= 0 ? initialIndex : 0,
-        slides: {
-            perView: 1,
-        },
+        initial: props.index,
+        slides: { perView: 1 },
+        slideChanged(s) {
+            setIndex(s.track.details.rel);
+        }
     });
+
 
     return (
         <Box

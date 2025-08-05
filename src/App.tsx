@@ -1,9 +1,9 @@
 import { Text, VStack, Grid, Box, Flex } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react';
 import Login from './pages/Login';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Home } from './pages';
-
+  
 export const UserContext = React.createContext<string>("")
 
 function App() {
@@ -24,9 +24,9 @@ function App() {
 
   return (
     <VStack
-      bg="orange.50"
+      bg="#F8F4F0"
       py="8"
-      color="gray.700"
+      color="#74583E"
       fontFamily="Serif"
       minH="100vh"
     >

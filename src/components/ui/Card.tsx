@@ -1,26 +1,26 @@
 import { Text, Image as Img, Box, VStack, Button, Portal, CloseButton, Drawer } from '@chakra-ui/react'
 import { FaRegHeart } from 'react-icons/fa'
-import { useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { ImageCarousel } from '.';
-import { type Image } from "@/types"
+import { ImagesContex } from './tabs/Tabs';
 
 const URL = import.meta.env.VITE_BE_URL;
 
-const Card = (props: Image & { index: number }) => {
+const Card = (props: { index: number }) => {
     const [open, setOpen] = useState(false);
+    const images = useContext(ImagesContex);
 
     return (
         <Drawer.Root open={open} placement="bottom" onOpenChange={(e) => setOpen(e.open)}>
             <Drawer.Trigger asChild>
                 <Button
-                    bg="white"
+                    bg="#F8F4F0"
                     color="gray.900"
                     rounded="2xl"
-                    shadow="md"
+                    shadow="sm"
                     p={0}
                     w="full"
                     h="auto"
-                    _active={{ bg: 'orange.100', shadow: '2xl' }}
                 >
                     <VStack
                         gap={0}
@@ -32,12 +32,12 @@ const Card = (props: Image & { index: number }) => {
                             loading="lazy"
                             roundedTop="2xl"
                             aspectRatio={4 / 3}
-                            src={`${URL}/download/${props._id}`}
+                            src={`${URL}/download/${images[props.index]._id}`}
                         />
                         <Box w="full" px="4" py="1">
                             <Text fontSize="xl" display="flex" alignItems="center" gap={1}>
                                 <FaRegHeart />
-                                {props.likes.length}
+                                {images[props.index].likes.length}
                             </Text>
                         </Box>
                     </VStack>

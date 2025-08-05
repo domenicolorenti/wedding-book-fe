@@ -25,8 +25,8 @@ const PhotoGrid = (props: { active: string }) => {
             gap={4}
             templateColumns="repeat(2, 1fr)"
         >
-            {filteredImages().map((image: Image, index: number) => (
-                <Card key={index} index={index} {...image}/>
+            {filteredImages().map((_image: Image, index: number) => (
+                <Card key={_image._id} index={index} />
             ))}
 
         </Grid>

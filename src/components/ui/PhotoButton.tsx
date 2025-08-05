@@ -55,19 +55,16 @@ const PhotoButton = () => {
         <Menu.Root>
             <Menu.Trigger asChild>
                 <Button
-                    bg="white"
+                    bg="#D8BFA4"
                     color="gray.900"
                     rounded="2xl"
-                    shadow="md"
                     py={6}
                     my={4}
                     fontSize="2xl"
-                    flex={1}
-                    flexDirection="column"
                     outline={'none'}
                     _active={{ bg: 'orange.100', shadow: '2xl' }}
                 >
-                    <Icon as={CiCamera} boxSize={14} />
+                    <Icon as={CiCamera} boxSize={9} />
                     <Text>Aggiungi una foto</Text>
                 </Button>
             </Menu.Trigger>

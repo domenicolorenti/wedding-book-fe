@@ -1,53 +1,51 @@
-import { Fieldset, Stack, Field, Input, Button, Text } from '@chakra-ui/react';
-import axios from 'axios';
-import { useState, type Dispatch, type SetStateAction } from 'react'
+import { Fieldset, Stack, Field, Input, Button, Spinner } from '@chakra-ui/react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '@/hooks';
+import { appTheme } from '@/config/theme';
+import { toaster } from '@/components/ui/toaster';
 
-const Login = (props: { setUser: Dispatch<SetStateAction<string>> }) => {
+const Login = () => {
     const navigate = useNavigate();
-    const [label, setLabel] = useState("");
-    const [insertUser, setInsertUser] = useState("");
+    const { login, loading, error: authError, isAuthenticated } = useAuth();
+    const [username, setUsername] = useState('');
+    const [localError, setLocalError] = useState('');
 
-    const URL = import.meta.env.VITE_BE_URL;
-
-    const login = async () => {
-        try {
-            const username = insertUser.trim().toLowerCase()
-
-            if (username === null || username === "") {
-                setLabel("Inserisci il nome per continuare")
-            }
-
-            const response = await axios.post(`${URL}/addUser`, { username });
-            if (response.status === 201) {
-                localStorage.setItem("wedding_username", username);
-                props.setUser(username);
-                navigate("/wedding-book-fe")
-            }
-        } catch (error: any) {
-            if (axios.isAxiosError(error) && error.response) {
-                if (error.response.status === 409) {
-                    setLabel("Questo nome è già in uso!");
-                }
-                if (error.response.status === 400) {
-                    setLabel("Questo input non è valido")
-                }
-                if (error.response.status === 500) {
-                    alert("Generic Server error")
-                }
-            }
-            if (error.code === "ERR_NETWORK" || error.message === "Network Error") {
-                alert("Server non raggiungibile")
-            }
-            console.log(error)
+    // Redirect if already authenticated
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/wedding-book-fe');
         }
-    }
+    }, [isAuthenticated, navigate]);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLocalError('');
+
+        const result = await login(username);
+
+        if (!result.success) {
+            setLocalError(result.error || 'Errore durante il login');
+            toaster.create({
+                title: 'Errore',
+                description: result.error || 'Errore durante il login',
+                type: 'error',
+                duration: 3000,
+            });
+        } else {
+            toaster.create({
+                title: 'Benvenuto!',
+                description: 'Login effettuato con successo',
+                type: 'success',
+                duration: 2000,
+            });
+        }
+    };
+
+    const displayError = localError || authError;
 
     return (
-        <form onSubmit={(e) => {
-            e.preventDefault();
-            login()
-        }}>
+        <form onSubmit={handleSubmit}>
             <Fieldset.Root
                 my="10%"
                 size="lg"
@@ -55,7 +53,7 @@ const Login = (props: { setUser: Dispatch<SetStateAction<string>> }) => {
                 p="4"
             >
                 <Stack>
-                    <Fieldset.HelperText>
+                    <Fieldset.HelperText fontSize="lg" textAlign="center">
                         Ciao!
                         <br />
                         Benvenuto su Wedding Book!
@@ -70,28 +68,27 @@ const Login = (props: { setUser: Dispatch<SetStateAction<string>> }) => {
                 </Stack>
 
                 <Fieldset.Content>
-                    <Field.Root>
-                        <Field.Label>Nome</Field.Label>
+                    <Field.Root invalid={!!displayError}>
+                        <Field.Label fontSize="lg">Nome</Field.Label>
                         <Input
                             name="name"
                             fontSize="16px"
-                            onChange={(e) => setInsertUser(e.target.value)}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                             rounded="2xl"
-                            type='text'
+                            type="text"
+                            placeholder="Il tuo nome"
+                            disabled={loading}
+                            autoComplete="name"
+                            aria-label="Inserisci il tuo nome"
+                            maxLength={50}
                         />
-                        <Text
-                            opacity={label ? 1 : 0}
-                            color="red.600"
-                            alignSelf="center"
-                        >
-                            {label}
-                        </Text>
+                        {displayError && (
+                            <Field.ErrorText color="red.600" textAlign="center" mt={2}>
+                                {displayError}
+                            </Field.ErrorText>
+                        )}
                     </Field.Root>
-
-                    {/* <Field.Root>
-            <Field.Label>Email address</Field.Label>
-            <Input name="email" type="email" />
-          </Field.Root> */}
                 </Fieldset.Content>
 
                 <Button
@@ -99,16 +96,21 @@ const Login = (props: { setUser: Dispatch<SetStateAction<string>> }) => {
                     rounded="2xl"
                     mx="auto"
                     px="8"
+                    py={6}
                     fontWeight="semibold"
                     shadow="md"
-                    outline={'none'}
+                    bg={appTheme.colors.primary}
+                    color="gray.900"
+                    _hover={{ bg: '#98AA97' }}
                     _active={{ bg: 'orange.100', shadow: '2xl' }}
+                    disabled={loading || !username.trim()}
+                    minW="150px"
                 >
-                    Entra
+                    {loading ? <Spinner size="sm" /> : 'Entra'}
                 </Button>
             </Fieldset.Root>
         </form>
-    )
-}
+    );
+};
 
-export default Login
+export default Login;

@@ -1,53 +1,87 @@
-import { Text, Button, Icon } from '@chakra-ui/react'
-import { Menu } from '@chakra-ui/react'
-import { CiCamera } from 'react-icons/ci'
-import { FaCamera } from 'react-icons/fa6'
-import { GrGallery } from 'react-icons/gr'
-import { useRef } from 'react'
-import { compressImage } from '@/utils/imageCompression'
-import axios from 'axios'
-
-const URL = import.meta.env.VITE_BE_URL;
+import { Text, Button, Icon, Spinner } from '@chakra-ui/react';
+import { Menu } from '@chakra-ui/react';
+import { CiCamera } from 'react-icons/ci';
+import { FaCamera } from 'react-icons/fa6';
+import { GrGallery } from 'react-icons/gr';
+import { useRef, useState, useContext } from 'react';
+import { compressImage } from '@/utils/imageCompression';
+import { validateImageFile } from '@/utils/validation';
+import { AuthContext } from '@/contexts/AuthContext';
+import { PhotoContext } from '@/contexts/PhotoContext';
+import { appTheme } from '@/config/theme';
+import { toaster } from './toaster';
 
 const PhotoButton = () => {
-    const cameraInputRef = useRef(null);
-    const galleryInputRef = useRef(null);
+    const cameraInputRef = useRef<HTMLInputElement>(null);
+    const galleryInputRef = useRef<HTMLInputElement>(null);
+    const [uploading, setUploading] = useState(false);
+    const { user } = useContext(AuthContext);
+    const { uploadPhoto } = useContext(PhotoContext);
 
     const handleCamera = () => {
         if (cameraInputRef.current) {
-            (cameraInputRef.current as HTMLInputElement).click();
+            cameraInputRef.current.click();
         }
     };
 
     const handleGallery = () => {
         if (galleryInputRef.current) {
-            (galleryInputRef.current as HTMLInputElement).click();
+            galleryInputRef.current.click();
         }
     };
 
     const savePhoto = async (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files && event.target.files[0];
-        if (file) {
-            try {
-                const compFile = await compressImage(file);
-                const username = localStorage.getItem("wedding_username") ?? "";
+        const file = event.target.files?.[0];
+        if (!file) return;
 
-                const formData = new FormData();
-                formData.append("username", username);
-                formData.append("file", compFile);
+        // Reset input value to allow selecting the same file again
+        event.target.value = '';
 
-                const response = await axios.post(`${URL}/addPhoto`, formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data",
-                    },
+        // Validate file
+        const validation = validateImageFile(file);
+        if (!validation.valid) {
+            toaster.create({
+                title: 'Errore',
+                description: validation.error || 'File non valido',
+                type: 'error',
+                duration: 3000,
+            });
+            return;
+        }
+
+        setUploading(true);
+
+        try {
+            // Show uploading toast
+            toaster.create({
+                title: 'Caricamento...',
+                description: 'Compressione e upload della foto in corso',
+                type: 'info',
+                duration: 2000,
+            });
+
+            const compressedFile = await compressImage(file);
+            const result = await uploadPhoto(user, compressedFile);
+
+            if (result.success) {
+                toaster.create({
+                    title: 'Successo!',
+                    description: 'Foto caricata con successo',
+                    type: 'success',
+                    duration: 3000,
                 });
-
-                if (response.status === 200) {
-                    console.log("Image uploaded!")
-                }
-            } catch (error) {
-                console.error(error);
+            } else {
+                throw new Error(result.error || 'Upload fallito');
             }
+        } catch (error) {
+            toaster.create({
+                title: 'Errore',
+                description: error instanceof Error ? error.message : 'Errore durante il caricamento',
+                type: 'error',
+                duration: 4000,
+            });
+        } finally {
+            setUploading(false);
         }
     };
 
@@ -55,17 +89,27 @@ const PhotoButton = () => {
         <Menu.Root>
             <Menu.Trigger asChild>
                 <Button
-                    bg="#A9BBA8"
+                    bg={appTheme.colors.primary}
                     color="gray.900"
                     rounded="2xl"
                     py={6}
                     my={4}
                     fontSize="2xl"
-                    outline={'none'}
+                    outline="none"
+                    _hover={{ bg: '#98AA97' }}
                     _active={{ bg: 'orange.100', shadow: '2xl' }}
+                    disabled={uploading}
+                    minH="60px"
+                    aria-label="Aggiungi una foto"
                 >
-                    <Icon as={CiCamera} boxSize={9} />
-                    <Text>Aggiungi una foto</Text>
+                    {uploading ? (
+                        <Spinner size="md" />
+                    ) : (
+                        <>
+                            <Icon as={CiCamera} boxSize={9} />
+                            <Text>Aggiungi una foto</Text>
+                        </>
+                    )}
                 </Button>
             </Menu.Trigger>
             <Menu.Positioner>
@@ -88,6 +132,7 @@ const PhotoButton = () => {
                         display="flex"
                         alignItems="center"
                         gap={3}
+                        disabled={uploading}
                     >
                         <FaCamera />
                         <Text>Fotocamera</Text>
@@ -103,6 +148,7 @@ const PhotoButton = () => {
                         display="flex"
                         alignItems="center"
                         gap={3}
+                        disabled={uploading}
                     >
                         <GrGallery />
                         <Text>Galleria</Text>
@@ -116,6 +162,8 @@ const PhotoButton = () => {
                 style={{ display: 'none' }}
                 ref={cameraInputRef}
                 onChange={savePhoto}
+                disabled={uploading}
+                aria-label="Carica foto dalla fotocamera"
             />
             <input
                 type="file"
@@ -123,9 +171,11 @@ const PhotoButton = () => {
                 style={{ display: 'none' }}
                 ref={galleryInputRef}
                 onChange={savePhoto}
+                disabled={uploading}
+                aria-label="Carica foto dalla galleria"
             />
         </Menu.Root>
-    )
-}
+    );
+};
 
-export default PhotoButton
+export default PhotoButton;

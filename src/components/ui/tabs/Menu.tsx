@@ -1,39 +1,36 @@
-import { Button, Grid, GridItem } from "@chakra-ui/react"
-import type { Dispatch, SetStateAction } from "react"
-import type { IconType } from "react-icons";
-import { FaHome, FaUser } from "react-icons/fa"
-import { TbRefresh } from "react-icons/tb";
+import { Button, Grid, GridItem, Icon as ChakraIcon } from '@chakra-ui/react';
+import type { Dispatch, SetStateAction } from 'react';
+import type { IconType } from 'react-icons';
+import { FaHome, FaUser } from 'react-icons/fa';
+import { TbRefresh } from 'react-icons/tb';
+import { appTheme } from '@/config/theme';
+import { memo } from 'react';
 
 const buttons = [
     {
-        value: "Home",
+        value: 'Home',
         icon: FaHome,
-        text: "Tutte"
+        text: 'Tutte',
     },
     {
-        value: "Profile",
+        value: 'Profile',
         icon: FaUser,
-        text: "Mie"
-    }
-]
+        text: 'Mie',
+    },
+];
 
-export const Menu = (props: { setActive: Dispatch<SetStateAction<string>>; active: string; fetchImages: () => Promise<void> }) => {
+interface MenuProps {
+    setActive: Dispatch<SetStateAction<string>>;
+    active: string;
+    fetchImages: () => Promise<void>;
+}
+
+export const Menu = ({ setActive, active, fetchImages }: MenuProps) => {
     return (
-        <Grid
-            w="80%"
-            gap={"1px"}
-            px={1}
-            h="42px"
-            templateColumns="repeat(7, 1fr)"
-        >
-            {buttons.map((item: { value: string; icon: IconType; text: string }) => (
-                <GridItem colSpan={3}>
-                    <MyButton
-                        key={item.value}
-                        {...item}
-                        setActive={props.setActive}
-                        active={props.active}
-                    />
+        <Grid w="80%" gap="1px" px={1} h="42px" templateColumns="repeat(7, 1fr)">
+            {buttons.map((item) => (
+                <GridItem key={item.value} colSpan={3}>
+                    <MyButton {...item} setActive={setActive} active={active} />
                 </GridItem>
             ))}
             <Button
@@ -43,31 +40,46 @@ export const Menu = (props: { setActive: Dispatch<SetStateAction<string>>; activ
                 rounded="2xl"
                 w="full"
                 h="full"
-                _active={{bg:'#A9BBA8'}}
-                onClick={() => props.fetchImages()}
-            ><TbRefresh /></Button>
+                _active={{ bg: appTheme.colors.primary }}
+                _hover={{ bg: 'gray.50' }}
+                onClick={() => fetchImages()}
+                aria-label="Aggiorna foto"
+            >
+                <ChakraIcon as={TbRefresh} />
+            </Button>
         </Grid>
-    )
+    );
+};
+
+interface MyButtonProps {
+    value: string;
+    icon: IconType;
+    text: string;
+    setActive: Dispatch<SetStateAction<string>>;
+    active: string;
 }
 
-const MyButton = (props: { value: string; icon: IconType; text: string; setActive: Dispatch<SetStateAction<string>>; active: string }) => {
-    const Icon = props.icon;
+const MyButton = memo(({ value, icon, text, setActive, active }: MyButtonProps) => {
+    const isActive = value === active;
     return (
         <Button
-            bg={props.value === props.active ? "#A9BBA8" : "white"}
+            bg={isActive ? appTheme.colors.primary : 'white'}
             color="gray.900"
             fontSize="xl"
             roundedTop="2xl"
             roundedBottom="0"
             borderWidth={0}
-            borderBottomWidth={props.value === props.active ? 0 : 1}
+            borderBottomWidth={isActive ? 0 : 1}
             borderColor="gray.200"
             w="full"
             h="full"
-            onClick={() => props.setActive(props.value)}
+            onClick={() => setActive(value)}
+            _hover={{ bg: isActive ? appTheme.colors.primary : 'gray.50' }}
+            aria-label={text}
+            aria-pressed={isActive}
         >
-            <Icon />
-            {props.text}
+            <ChakraIcon as={icon} mr={1} />
+            {text}
         </Button>
-    )
-}
+    );
+});

@@ -1,60 +1,56 @@
-import { Text, VStack, Grid, Box, Flex } from '@chakra-ui/react'
-import React, { useEffect, useState } from 'react';
-import Login from './pages/Login';
-import { useNavigate } from 'react-router-dom';
-import { Home } from './pages';
-  
-export const UserContext = React.createContext<string>("")
+import { VStack, Text } from '@chakra-ui/react';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { Login, Home } from './pages';
+import { useAuth } from './hooks';
+import { AuthProvider } from './contexts/AuthContext';
+import { appTheme } from './config/theme';
+import ErrorBoundary from './components/ErrorBoundary';
+import { Toaster } from './components/ui/toaster';
 
-function App() {
-  const [user, setUser] = useState("");
+function AppContent() {
+  const { user, loading, logout } = useAuth();
 
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    const saved = localStorage.getItem("wedding_username");
-    if (saved) {
-      setUser(saved);
-      navigate("/wedding-book-fe")
-    } else {
-      setUser("")
-      navigate("/wedding-book-fe/login")
-    }
-  }, []);
+  if (loading) {
+    return (
+      <VStack
+        bg={appTheme.colors.background}
+        minH="100vh"
+        justify="center"
+        align="center"
+        color={appTheme.colors.text}
+        fontFamily="Serif"
+      >
+        <Text fontSize="2xl">Caricamento...</Text>
+      </VStack>
+    );
+  }
 
   return (
-    <VStack
-      bg="#F9F7F4"
-      py="8"
-      color="#4A4A47"
-      fontFamily="Serif"
-      minH="100vh"
-    >
-      <UserContext value={user}>
-        {/* <Image
-        w="80%"
-        src={logo}
-      /> */}
-        <Flex>
-          Benvenuto/a <Text ml="1" fontWeight={'bold'}>{user}</Text>!
-        </Flex>
-        <Text
-          fontSize="5xl"
-        >
-          Wedding Book
-        </Text>
-        {/* <Routes>
-          <Route path="/wedding-book-fe/login" element={<Login setUser={setUser} />} />
-          <Route path='/wedding-book-fe/' element={<Home />} />
-        </Routes> */}
-        {user==="" ? (
-          <Login setUser={setUser} />
-        ) : (
-          <Home />
-        )}
-      </UserContext>
-    </VStack >
-  )
+    <AuthProvider user={user} logout={logout}>
+      <VStack
+        bg={appTheme.colors.background}
+        py="8"
+        color={appTheme.colors.text}
+        fontFamily="Serif"
+        minH="100vh"
+      >
+        <Routes>
+          <Route path="/wedding-book-fe/login" element={<Login />} />
+          <Route path="/wedding-book-fe" element={<Home />} />
+          <Route path="*" element={<Navigate to="/wedding-book-fe" replace />} />
+        </Routes>
+      </VStack>
+      <Toaster />
+    </AuthProvider>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <ErrorBoundary>
+      <AppContent />
+    </ErrorBoundary>
+  );
+}
+
+export default App;

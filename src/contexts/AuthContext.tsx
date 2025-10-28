@@ -2,23 +2,20 @@ import React, { createContext } from 'react';
 
 interface AuthContextType {
   user: string;
-  logout: () => void;
 }
 
 export const AuthContext = createContext<AuthContextType>({
-  user: '',
-  logout: () => {},
+  user: ''
 });
 
 interface AuthProviderProps {
   user: string;
-  logout: () => void;
   children: React.ReactNode;
 }
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ user, logout, children }) => {
+export const AuthProvider: React.FC<AuthProviderProps> = ({ user, children }) => {
   return (
-    <AuthContext.Provider value={{ user, logout }}>
+    <AuthContext.Provider value={{ user }}>
       {children}
     </AuthContext.Provider>
   );

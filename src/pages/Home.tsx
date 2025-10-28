@@ -1,17 +1,15 @@
 import { Tabs } from '@/components/ui';
 import PhotoButton from '@/components/ui/PhotoButton';
-import { VStack, Text, Flex, Button, Icon } from '@chakra-ui/react';
+import { VStack, Text, Flex } from '@chakra-ui/react';
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '@/contexts/AuthContext';
 import { PhotoProvider } from '@/contexts/PhotoContext';
 import { usePhotos } from '@/hooks';
-import { appTheme } from '@/config/theme';
-import { FiLogOut } from 'react-icons/fi';
 
 const Home = () => {
     const navigate = useNavigate();
-    const { user, logout } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const photosData = usePhotos();
 
     useEffect(() => {
@@ -19,10 +17,6 @@ const Home = () => {
             navigate('/wedding-book-fe/login');
         }
     }, [user, navigate]);
-
-    const handleLogout = () => {
-        logout();
-    };
 
     return (
         <PhotoProvider value={photosData}>

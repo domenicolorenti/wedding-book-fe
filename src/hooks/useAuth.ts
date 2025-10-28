@@ -69,18 +69,12 @@ export const useAuth = () => {
     }
   }, [navigate]);
 
-  const logout = useCallback(() => {
-    localStorage.removeItem(STORAGE_KEY);
-    setUser('');
-    navigate('/wedding-book-fe/login');
-  }, [navigate]);
 
   return {
     user,
     loading,
     error,
     login,
-    logout,
     isAuthenticated: !!user,
   };
 };

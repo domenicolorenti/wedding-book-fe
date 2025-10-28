@@ -8,7 +8,7 @@ import ErrorBoundary from './components/ErrorBoundary';
 import { Toaster } from './components/ui/toaster';
 
 function AppContent() {
-  const { user, loading, logout } = useAuth();
+  const { user, loading } = useAuth();
 
   if (loading) {
     return (
@@ -26,7 +26,7 @@ function AppContent() {
   }
 
   return (
-    <AuthProvider user={user} logout={logout}>
+    <AuthProvider user={user}>
       <VStack
         bg={appTheme.colors.background}
         py="8"

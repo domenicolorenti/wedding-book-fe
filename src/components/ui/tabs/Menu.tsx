@@ -43,6 +43,7 @@ export const Menu = (props: { setActive: Dispatch<SetStateAction<string>>; activ
                 rounded="2xl"
                 w="full"
                 h="full"
+                _active={{bg:'#A9BBA8'}}
                 onClick={() => props.fetchImages()}
             ><TbRefresh /></Button>
         </Grid>
@@ -53,7 +54,7 @@ const MyButton = (props: { value: string; icon: IconType; text: string; setActiv
     const Icon = props.icon;
     return (
         <Button
-            bg={props.value === props.active ? "#D8BFA4" : "white"}
+            bg={props.value === props.active ? "#A9BBA8" : "white"}
             color="gray.900"
             fontSize="xl"
             roundedTop="2xl"

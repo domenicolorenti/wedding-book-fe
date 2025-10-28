@@ -24,9 +24,9 @@ function App() {
 
   return (
     <VStack
-      bg="#F8F4F0"
+      bg="#F9F7F4"
       py="8"
-      color="#74583E"
+      color="#4A4A47"
       fontFamily="Serif"
       minH="100vh"
     >

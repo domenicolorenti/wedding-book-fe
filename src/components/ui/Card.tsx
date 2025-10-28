@@ -17,7 +17,7 @@ const Card = (props: { index: number }) => {
                     bg="#F8F4F0"
                     color="gray.900"
                     rounded="2xl"
-                    shadow="sm"
+                    borderColor={"#888"}
                     p={0}
                     w="full"
                     h="auto"

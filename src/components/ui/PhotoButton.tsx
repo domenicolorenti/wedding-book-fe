@@ -55,7 +55,7 @@ const PhotoButton = () => {
         <Menu.Root>
             <Menu.Trigger asChild>
                 <Button
-                    bg="#D8BFA4"
+                    bg="#A9BBA8"
                     color="gray.900"
                     rounded="2xl"
                     py={6}

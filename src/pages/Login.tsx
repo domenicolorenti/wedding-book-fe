@@ -1,4 +1,4 @@
-import { Fieldset, Stack, Field, Input, Button, Spinner } from '@chakra-ui/react';
+import { Fieldset, Stack, Field, Input, Button, Spinner, Box, Flex, Text } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks';
@@ -24,11 +24,11 @@ const Login = () => {
 
         const result = await login(username);
 
-        if (!result.success) {
-            setLocalError(result.error || 'Errore durante il login');
+        if (!result?.success) {
+            setLocalError(result?.error || 'Errore durante il login');
             toaster.create({
                 title: 'Errore',
-                description: result.error || 'Errore durante il login',
+                description: result?.error || 'Errore durante il login',
                 type: 'error',
                 duration: 3000,
             });
@@ -45,71 +45,79 @@ const Login = () => {
     const displayError = localError || authError;
 
     return (
-        <form onSubmit={handleSubmit}>
-            <Fieldset.Root
-                my="10%"
-                size="lg"
+        <Flex align="center" justify="center" minH="80vh" px={4} w="full">
+            <Box
+                w="full"
                 maxW="md"
-                p="4"
+                bg="white"
+                p={{ base: 8, md: 10 }}
+                borderRadius="3xl"
+                boxShadow="xl"
+                border="1px solid"
+                borderColor="gray.100"
             >
-                <Stack>
-                    <Fieldset.HelperText fontSize="lg" textAlign="center">
-                        Ciao!
-                        <br />
-                        Benvenuto su Wedding Book!
-                        <br />
-                        <br />
-                        Qui potrai caricare le foto più uniche e divertenti!
-                        La foto più bella sarà premiata alla fine dell'evento!
-                        <br />
-                        <br />
-                        Inserisci il Nome per cominciare
-                    </Fieldset.HelperText>
-                </Stack>
+                <form onSubmit={handleSubmit}>
+                    <Fieldset.Root size="lg" w="full">
+                        <Stack gap={6} w="full">
+                            <Box textAlign="center" mb={4}>
+                                <Text fontSize="3xl" fontFamily="serif" mb={2}>Benvenuto</Text>
+                                <Text color="gray.500" fontSize="sm" lineHeight="relaxed">
+                                    Partecipa al racconto del nostro matrimonio.
+                                    <br />
+                                    Carica le tue foto più belle!
+                                </Text>
+                            </Box>
 
-                <Fieldset.Content>
-                    <Field.Root invalid={!!displayError}>
-                        <Field.Label fontSize="lg">Nome</Field.Label>
-                        <Input
-                            name="name"
-                            fontSize="16px"
-                            value={username}
-                            onChange={(e) => setUsername(e.target.value)}
-                            rounded="2xl"
-                            type="text"
-                            placeholder="Il tuo nome"
-                            disabled={loading}
-                            autoComplete="name"
-                            aria-label="Inserisci il tuo nome"
-                            maxLength={50}
-                        />
-                        {displayError && (
-                            <Field.ErrorText color="red.600" textAlign="center" mt={2}>
-                                {displayError}
-                            </Field.ErrorText>
-                        )}
-                    </Field.Root>
-                </Fieldset.Content>
+                            <Fieldset.Content>
+                                <Field.Root invalid={!!displayError}>
+                                    <Field.Label fontSize="sm" fontWeight="medium" color="gray.700">Come ti chiami?</Field.Label>
+                                    <Input
+                                        name="name"
+                                        fontSize="lg"
+                                        value={username}
+                                        onChange={(e) => setUsername(e.target.value)}
+                                        rounded="xl"
+                                        size="xl"
+                                        type="text"
+                                        placeholder="Il tuo nome"
+                                        disabled={loading}
+                                        autoComplete="name"
+                                        aria-label="Inserisci il tuo nome"
+                                        maxLength={50}
+                                        bg="gray.50"
+                                        border="0"
+                                        _focus={{ bg: "white", ring: "2px", ringColor: appTheme.colors.primary }}
+                                    />
+                                    {displayError && (
+                                        <Field.ErrorText color="red.500" fontSize="sm" mt={2}>
+                                            {displayError}
+                                        </Field.ErrorText>
+                                    )}
+                                </Field.Root>
+                            </Fieldset.Content>
 
-                <Button
-                    type="submit"
-                    rounded="2xl"
-                    mx="auto"
-                    px="8"
-                    py={6}
-                    fontWeight="semibold"
-                    shadow="md"
-                    bg={appTheme.colors.primary}
-                    color="gray.900"
-                    _hover={{ bg: '#98AA97' }}
-                    _active={{ bg: 'orange.100', shadow: '2xl' }}
-                    disabled={loading || !username.trim()}
-                    minW="150px"
-                >
-                    {loading ? <Spinner size="sm" /> : 'Entra'}
-                </Button>
-            </Fieldset.Root>
-        </form>
+                            <Button
+                                type="submit"
+                                rounded="xl"
+                                w="full"
+                                py={7}
+                                fontSize="lg"
+                                fontWeight="semibold"
+                                shadow="lg"
+                                bg={appTheme.colors.primary}
+                                color="white"
+                                _hover={{ transform: 'translateY(-2px)', shadow: 'xl', opacity: 0.9 }}
+                                _active={{ transform: 'translateY(0)', shadow: 'md' }}
+                                transition="all 0.2s"
+                                disabled={loading || !username.trim()}
+                            >
+                                {loading ? <Spinner size="sm" color="white" /> : 'Entra nel Wedding Book'}
+                            </Button>
+                        </Stack>
+                    </Fieldset.Root>
+                </form>
+            </Box>
+        </Flex>
     );
 };
 

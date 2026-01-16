@@ -1,4 +1,4 @@
-import { VStack, Text } from '@chakra-ui/react';
+import { VStack, Text, Box, Center, Spinner } from '@chakra-ui/react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Login, Home } from './pages';
 import { useAuth } from './hooks';
@@ -12,34 +12,34 @@ function AppContent() {
 
   if (loading) {
     return (
-      <VStack
+      <Center
         bg={appTheme.colors.background}
         minH="100vh"
-        justify="center"
-        align="center"
         color={appTheme.colors.text}
-        fontFamily="Serif"
       >
-        <Text fontSize="2xl">Caricamento...</Text>
-      </VStack>
+        <VStack gap={4}>
+          <Spinner size="xl" color={appTheme.colors.primary} css={{ '--spinner-track-color': 'rgba(0,0,0,0.1)' }} />
+          <Text fontSize="lg" fontFamily="serif" letterSpacing="widest">WEDDING BOOK</Text>
+        </VStack>
+      </Center>
     );
   }
 
   return (
     <AuthProvider user={user}>
-      <VStack
+      <Box
         bg={appTheme.colors.background}
-        py="8"
         color={appTheme.colors.text}
         fontFamily="Serif"
         minH="100vh"
+        backgroundImage={`linear-gradient(to bottom, ${appTheme.colors.background} 0%, #ffffff 100%)`}
       >
         <Routes>
           <Route path="/wedding-book-fe/login" element={<Login />} />
           <Route path="/wedding-book-fe" element={<Home />} />
           <Route path="*" element={<Navigate to="/wedding-book-fe" replace />} />
         </Routes>
-      </VStack>
+      </Box>
       <Toaster />
     </AuthProvider>
   );

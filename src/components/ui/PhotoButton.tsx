@@ -1,4 +1,4 @@
-import { Text, Button, Icon, Spinner } from '@chakra-ui/react';
+import { Text, Button, Icon, Spinner, Box } from '@chakra-ui/react';
 import { Menu } from '@chakra-ui/react';
 import { CiCamera } from 'react-icons/ci';
 import { FaCamera } from 'react-icons/fa6';
@@ -90,24 +90,27 @@ const PhotoButton = () => {
             <Menu.Trigger asChild>
                 <Button
                     bg={appTheme.colors.primary}
-                    color="gray.900"
-                    rounded="2xl"
-                    py={6}
-                    my={4}
-                    fontSize="2xl"
+                    color="white"
+                    rounded="full"
+                    py={8}
+                    px={10}
+                    fontSize="xl"
+                    fontWeight="medium"
                     outline="none"
-                    _hover={{ bg: '#98AA97' }}
-                    _active={{ bg: 'orange.100', shadow: '2xl' }}
+                    _hover={{ transform: 'scale(1.05)', shadow: '2xl' }}
+                    _active={{ transform: 'scale(0.95)' }}
+                    transition="all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)"
+                    shadow="xl"
                     disabled={uploading}
-                    minH="60px"
+                    w="full"
                     aria-label="Aggiungi una foto"
                 >
                     {uploading ? (
-                        <Spinner size="md" />
+                        <Spinner size="md" color="white" />
                     ) : (
                         <>
-                            <Icon as={CiCamera} boxSize={9} />
-                            <Text>Aggiungi una foto</Text>
+                            <Icon as={CiCamera} boxSize={8} mr={2} strokeWidth={1} />
+                            <Text>Scatta una foto</Text>
                         </>
                     )}
                 </Button>
@@ -115,10 +118,12 @@ const PhotoButton = () => {
             <Menu.Positioner>
                 <Menu.Content
                     rounded="2xl"
-                    bg="white"
+                    bg="white/95"
+                    backdropFilter="blur(10px)"
                     boxShadow="xl"
-                    py={2}
-                    px={1}
+                    p={2}
+                    border="1px solid"
+                    borderColor="gray.100"
                     minW="220px"
                 >
                     <Menu.Item
@@ -126,7 +131,7 @@ const PhotoButton = () => {
                         onClick={handleCamera}
                         fontSize="xl"
                         color="gray.900"
-                        _hover={{ bg: 'orange.50' }}
+                        _hover={{ bg: 'gray.50' }}
                         rounded="lg"
                         py={3}
                         display="flex"
@@ -142,7 +147,7 @@ const PhotoButton = () => {
                         onClick={handleGallery}
                         fontSize="xl"
                         color="gray.900"
-                        _hover={{ bg: 'orange.50' }}
+                        _hover={{ bg: 'gray.50' }}
                         rounded="lg"
                         py={3}
                         display="flex"

@@ -121,7 +121,7 @@ export const ImageCarousel = ({ photo }: { photo: ImageType }) => {
                         {/* Main Image Area */}
                         <Box w="full" h="full" display="flex" alignItems="center" justifyContent="center" position="relative">
                             {!imageLoadStates[image._id] && (
-                                <Spinner size="xl" color="white" thickness="3px" position="absolute" top="50%" left="50%" transform="translate(-50%, -50%)" />
+                                <Spinner size="xl" color="white" position="absolute" top="50%" left="50%" transform="translate(-50%, -50%)" />
                             )}
                             <Image
                                 src={apiService.getPhotoUrl(image._id)}
@@ -148,7 +148,7 @@ export const ImageCarousel = ({ photo }: { photo: ImageType }) => {
                             pointerEvents="none"
                         />
                         
-                        <Box position="absolute" bottom={10} width="full" display="flex" justifyContent="center" zIndex={2}>
+                        <Box position="absolute" bottom={5} width="full" display="flex" justifyContent="center" zIndex={2}>
                             <LikeButton photo={image} username={user} />
                         </Box>
                     </Box>

@@ -82,8 +82,8 @@ const Card = ({ photo }: CardProps) => {
                             bottom={0} 
                             left={0} 
                             right={0} 
-                            bg="linear-gradient(to top, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%)"
-                            p={3}
+                            bg="linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, rgba(0,0,0,0) 100%)"
+                            p={4}
                             display="flex"
                             justifyContent="flex-end"
                         >

@@ -49,12 +49,13 @@ const Login = () => {
             <Box
                 w="full"
                 maxW="md"
-                bg="white"
+                bg="white/80"
+                backdropFilter="blur(20px)"
                 p={{ base: 8, md: 10 }}
                 borderRadius="3xl"
-                boxShadow="xl"
+                boxShadow="2xl"
                 border="1px solid"
-                borderColor="gray.100"
+                borderColor="white"
             >
                 <form onSubmit={handleSubmit}>
                     <Fieldset.Root size="lg" w="full">
@@ -84,9 +85,10 @@ const Login = () => {
                                         autoComplete="name"
                                         aria-label="Inserisci il tuo nome"
                                         maxLength={50}
-                                        bg="gray.50"
+                                        bg="white"
                                         border="0"
-                                        _focus={{ bg: "white", ring: "2px", ringColor: appTheme.colors.primary }}
+                                        _focus={{ ring: "2px", ringColor: appTheme.colors.primary, bg: "white" }}
+                                        boxShadow="sm"
                                     />
                                     {displayError && (
                                         <Field.ErrorText color="red.500" fontSize="sm" mt={2}>

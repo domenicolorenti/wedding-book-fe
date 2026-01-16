@@ -118,12 +118,12 @@ const PhotoButton = () => {
             <Menu.Positioner>
                 <Menu.Content
                     rounded="2xl"
-                    bg="white/95"
-                    backdropFilter="blur(10px)"
-                    boxShadow="xl"
+                    bg="white/90"
+                    backdropFilter="blur(16px)"
+                    boxShadow="2xl"
                     p={2}
                     border="1px solid"
-                    borderColor="gray.100"
+                    borderColor="white"
                     minW="220px"
                 >
                     <Menu.Item

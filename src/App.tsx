@@ -25,6 +25,23 @@ function AppContent() {
     );
   }
 
+  const globalStyles = {
+    '&::-webkit-scrollbar': {
+      width: '6px',
+    },
+    '&::-webkit-scrollbar-track': {
+      background: 'transparent',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: 'rgba(0,0,0,0.1)',
+      borderRadius: '3px',
+    },
+    '::selection': {
+      background: appTheme.colors.primary,
+      color: 'white',
+    },
+  };
+
   return (
     <AuthProvider user={user}>
       <Box
@@ -32,7 +49,8 @@ function AppContent() {
         color={appTheme.colors.text}
         fontFamily="Serif"
         minH="100vh"
-        backgroundImage={`linear-gradient(to bottom, ${appTheme.colors.background} 0%, #ffffff 100%)`}
+        backgroundImage={`radial-gradient(circle at 50% 0%, #ffffff 0%, ${appTheme.colors.background} 100%)`}
+        css={globalStyles}
       >
         <Routes>
           <Route path="/wedding-book-fe/login" element={<Login />} />

@@ -6,6 +6,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { appTheme } from './config/theme';
 import ErrorBoundary from './components/ErrorBoundary';
 import { Toaster } from './components/ui/toaster';
+import bgImage from './assets/bg-no-flowers.svg';
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -45,11 +46,22 @@ function AppContent() {
   return (
     <AuthProvider user={user}>
       <Box
+        position="fixed"
+        top={0}
+        left={0}
+        w="100%"
+        h="100%"
+        zIndex={-1}
         bg={appTheme.colors.background}
+        backgroundImage={`url(${bgImage})`}
+        backgroundSize="cover"
+        backgroundPosition="center"
+        backgroundRepeat="no-repeat"
+      />
+      <Box
         color={appTheme.colors.text}
         fontFamily="Serif"
         minH="100vh"
-        backgroundImage={`radial-gradient(circle at 50% 0%, #ffffff 0%, ${appTheme.colors.background} 100%)`}
         css={globalStyles}
       >
         <Routes>

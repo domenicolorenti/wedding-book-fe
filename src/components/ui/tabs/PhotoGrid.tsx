@@ -1,10 +1,11 @@
-import { Grid, Text, VStack, HStack, Button, Icon } from '@chakra-ui/react';
+import { Grid, Text, VStack, HStack, Button, Icon, Flex } from '@chakra-ui/react';
 import { Card } from '..';
 import { useContext, useMemo, useState, useEffect } from 'react';
 import { AuthContext } from '@/contexts/AuthContext';
 import { type Image } from '@/types';
 import React from 'react';
 import { FiChevronLeft, FiChevronRight } from 'react-icons/fi';
+import { appTheme } from '@/config/theme';
 
 interface PhotoGridProps {
     active: string;
@@ -40,14 +41,17 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({ active, photos }) => {
 
     const handlePrevPage = () => {
         setCurrentPage((prev) => Math.max(1, prev - 1));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handleNextPage = () => {
         setCurrentPage((prev) => Math.min(totalPages, prev + 1));
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     const handlePageClick = (page: number) => {
         setCurrentPage(page);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
     if (filteredImages.length === 0) {
@@ -78,20 +82,33 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({ active, photos }) => {
             
             {/* Pagination Controls */}
             {totalPages > 1 && (
-                <HStack w="full" justify="center" align="center" pb={6} gap={2}>
+                <Flex 
+                    w="full" 
+                    justify="center" 
+                    align="center" 
+                    py={8} 
+                    gap={4}
+                >
                     <Button
                         onClick={handlePrevPage}
                         disabled={currentPage === 1}
-                        variant="outline"
-                        size="sm"
+                        variant="ghost"
+                        rounded="full"
+                        w={10}
+                        h={10}
+                        minW={10}
+                        p={0}
+                        color="gray.600"
+                        _hover={{ bg: 'gray.100', color: appTheme.colors.primary }}
+                        _disabled={{ opacity: 0.3, cursor: 'not-allowed', _hover: { bg: 'transparent' } }}
                         aria-label="Pagina precedente"
-                        minW="40px"
+                        transition="all 0.2s"
                     >
-                        <Icon as={FiChevronLeft} />
+                        <Icon as={FiChevronLeft} boxSize={6} />
                     </Button>
                     
                     {/* Page numbers */}
-                    <HStack gap={1}>
+                    <HStack gap={2}>
                         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => {
                             // Show first page, last page, current page, and pages around current
                             const showPage = 
@@ -105,7 +122,7 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({ active, photos }) => {
                             
                             if (showEllipsisBefore || showEllipsisAfter) {
                                 return (
-                                    <Text key={`ellipsis-${page}`} px={2} color="gray.500">
+                                    <Text key={`ellipsis-${page}`} color="gray.400" fontSize="sm" fontWeight="medium">
                                         ...
                                     </Text>
                                 );
@@ -113,14 +130,28 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({ active, photos }) => {
                             
                             if (!showPage) return null;
                             
+                            const isActive = currentPage === page;
+                            
                             return (
                                 <Button
                                     key={page}
                                     onClick={() => handlePageClick(page)}
-                                    variant={currentPage === page ? 'solid' : 'ghost'}
-                                    colorScheme={currentPage === page ? 'orange' : 'gray'}
+                                    variant="ghost"
+                                    bg={isActive ? appTheme.colors.primary : 'transparent'}
+                                    color={isActive ? 'gray.900' : 'gray.600'}
+                                    _hover={{ 
+                                        bg: isActive ? appTheme.colors.primary : 'gray.100',
+                                        transform: isActive ? 'none' : 'translateY(-2px)'
+                                    }}
                                     size="sm"
-                                    minW="40px"
+                                    w={10}
+                                    h={10}
+                                    minW={10}
+                                    rounded="full"
+                                    fontSize="sm"
+                                    fontWeight={isActive ? "bold" : "medium"}
+                                    shadow={isActive ? "md" : "none"}
+                                    transition="all 0.2s"
                                 >
                                     {page}
                                 </Button>
@@ -131,14 +162,21 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({ active, photos }) => {
                     <Button
                         onClick={handleNextPage}
                         disabled={currentPage === totalPages}
-                        variant="outline"
-                        size="sm"
+                        variant="ghost"
+                        rounded="full"
+                        w={10}
+                        h={10}
+                        minW={10}
+                        p={0}
+                        color="gray.600"
+                        _hover={{ bg: 'gray.100', color: appTheme.colors.primary }}
+                        _disabled={{ opacity: 0.3, cursor: 'not-allowed', _hover: { bg: 'transparent' } }}
                         aria-label="Pagina successiva"
-                        minW="40px"
+                        transition="all 0.2s"
                     >
-                        <Icon as={FiChevronRight} />
+                        <Icon as={FiChevronRight} boxSize={6} />
                     </Button>
-                </HStack>
+                </Flex>
             )}
         </VStack>
     );

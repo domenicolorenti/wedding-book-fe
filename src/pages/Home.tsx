@@ -55,10 +55,8 @@ const Home = () => {
                         </Box>
                     </VStack>
 
-                    <Separator mb={10} borderColor="gray.200" />
-
                     {/* Gallery Title */}
-                    <Flex align="center" gap={4} mb={8}>
+                    <Flex align="center" gap={4}>
                         <Text fontSize="2xl" fontFamily="serif">Galleria</Text>
                         <Box h="1px" flex={1} bg="gray.100" />
                     </Flex>

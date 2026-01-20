@@ -1,4 +1,4 @@
-import { Button, Grid, GridItem, Icon as ChakraIcon } from '@chakra-ui/react';
+import { Button, Flex, Text, Box, Icon } from '@chakra-ui/react';
 import type { Dispatch, SetStateAction } from 'react';
 import type { IconType } from 'react-icons';
 import { FaHome, FaUser } from 'react-icons/fa';
@@ -27,27 +27,40 @@ interface MenuProps {
 
 export const Menu = ({ setActive, active, fetchImages }: MenuProps) => {
     return (
-        <Grid w="80%" gap="1px" px={1} h="42px" templateColumns="repeat(7, 1fr)">
+        <Flex 
+            bg="white" 
+            p={1.5} 
+            rounded="full" 
+            shadow="lg" 
+            border="1px solid" 
+            borderColor="gray.100"
+            gap={1}
+            align="center"
+            maxW="fit-content"
+            mx="auto"
+        >
             {buttons.map((item) => (
-                <GridItem key={item.value} colSpan={3}>
-                    <MyButton {...item} setActive={setActive} active={active} />
-                </GridItem>
+                <MyButton key={item.value} {...item} setActive={setActive} active={active} />
             ))}
+            
+            <Box w="1px" h="20px" bg="gray.200" mx={2} />
+
             <Button
-                bg="white"
-                color="gray.900"
-                fontSize="xl"
-                rounded="2xl"
-                w="full"
-                h="full"
-                _active={{ bg: appTheme.colors.primary }}
-                _hover={{ bg: 'gray.50' }}
+                variant="ghost"
+                rounded="full"
+                w="10"
+                h="10"
+                minW="10"
+                p={0}
+                color="gray.400"
+                _hover={{ bg: 'gray.50', color: appTheme.colors.primary, transform: 'rotate(180deg)' }}
                 onClick={() => fetchImages()}
                 aria-label="Aggiorna foto"
+                transition="all 0.4s ease"
             >
-                <ChakraIcon as={TbRefresh} />
+                <Icon as={TbRefresh} boxSize={5} />
             </Button>
-        </Grid>
+        </Flex>
     );
 };
 
@@ -59,26 +72,30 @@ interface MyButtonProps {
     active: string;
 }
 
-const MyButton = memo(({ value, icon, text, setActive, active }: MyButtonProps) => {
+const MyButton = memo(({ value, icon: Icon, text, setActive, active }: MyButtonProps) => {
     const isActive = value === active;
     return (
         <Button
-            bg={isActive ? appTheme.colors.primary : 'white'}
-            color="gray.900"
-            fontSize="xl"
-            roundedTop="2xl"
-            roundedBottom="0"
-            borderWidth={0}
-            borderBottomWidth={isActive ? 0 : 1}
-            borderColor="gray.200"
-            w="full"
-            h="full"
+            variant="ghost"
+            bg={isActive ? appTheme.colors.primary : 'transparent'}
+            color={isActive ? 'gray.900' : 'gray.500'}
+            rounded="full"
+            px={6}
+            h="10"
             onClick={() => setActive(value)}
-            _hover={{ bg: isActive ? appTheme.colors.primary : 'gray.50' }}
+            _hover={{ 
+                bg: isActive ? appTheme.colors.primary : 'gray.50',
+                color: isActive ? 'gray.900' : 'gray.700',
+                transform: 'translateY(-1px)'
+            }}
+            _active={{ transform: 'translateY(0)' }}
+            transition="all 0.2s"
             aria-label={text}
             aria-pressed={isActive}
+            fontWeight="medium"
+            fontSize="sm"
         >
-            <ChakraIcon as={icon} mr={1} />
+            <Icon style={{ marginRight: '8px' }} />
             {text}
         </Button>
     );

@@ -107,13 +107,13 @@ const Login = () => {
                                 fontWeight="semibold"
                                 shadow="lg"
                                 bg={appTheme.colors.primary}
-                                color="white"
+                                color="gray.900"
                                 _hover={{ transform: 'translateY(-2px)', shadow: 'xl', opacity: 0.9 }}
                                 _active={{ transform: 'translateY(0)', shadow: 'md' }}
                                 transition="all 0.2s"
                                 disabled={loading || !username.trim()}
                             >
-                                {loading ? <Spinner size="sm" color="white" /> : 'Entra nel Wedding Book'}
+                                {loading ? <Spinner size="sm" color="gray.900" /> : 'Entra nel Wedding Book'}
                             </Button>
                         </Stack>
                     </Fieldset.Root>

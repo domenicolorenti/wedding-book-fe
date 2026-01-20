@@ -57,8 +57,8 @@ const Home = () => {
 
                     {/* Gallery Title */}
                     <Flex align="center" gap={4}>
-                        <Text fontSize="2xl" fontFamily="serif">Galleria</Text>
-                        <Box h="1px" flex={1} bg="gray.100" />
+                        <Text fontSize="3xl" fontFamily="serif">Galleria</Text>
+                        <Box h="1px" flex={1} bg="gray.600" />
                     </Flex>
                 </Container>
 

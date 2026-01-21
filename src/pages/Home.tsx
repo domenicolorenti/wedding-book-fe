@@ -29,7 +29,7 @@ const Home = () => {
                             <Text fontSize="xs" fontWeight="bold" letterSpacing="0.2em" textTransform="uppercase" color="gray.500">
                                 Wedding Book
                             </Text>
-                            <Text fontSize="2xl" fontFamily="serif">
+                            <Text fontSize="xl" fontFamily="serif">
                                 Ciao, {user}
                             </Text>
                         </VStack>
@@ -57,8 +57,8 @@ const Home = () => {
 
                     {/* Gallery Title */}
                     <Flex align="center" gap={4}>
-                        <Text fontSize="3xl" fontFamily="serif">Galleria</Text>
-                        <Box h="1px" flex={1} bg="gray.600" />
+                        <Text fontSize="2xl" fontFamily="serif">Le Foto</Text>
+                        <Box h="1px" flex={1} bg="gray.400" />
                     </Flex>
                 </Container>
 

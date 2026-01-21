@@ -1,9 +1,11 @@
-import { Fieldset, Stack, Field, Input, Button, Spinner, Box, Flex, Text } from '@chakra-ui/react';
+import { Fieldset, Stack, Field, Input, Button, Spinner, Box, Flex, Text, Icon } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks';
 import { appTheme } from '@/config/theme';
 import { toaster } from '@/components/ui/toaster';
+import { IoLogoJavascript } from 'react-icons/io';
+import { IoLogoGitlab } from 'react-icons/io5';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -45,7 +47,8 @@ const Login = () => {
     const displayError = localError || authError;
 
     return (
-        <Flex align="center" justify="center" minH="80vh" px={4} w="full">
+        <Flex direction="column" gap={8} align="center" justify="center" minH="80vh" px={4} w="full">
+            <Icon boxSize={"72px"} as={IoLogoGitlab}/>
             <Box
                 w="full"
                 maxW="md"

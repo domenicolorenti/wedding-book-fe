@@ -114,7 +114,7 @@ export const ImageCarousel = ({ photo }: { photo: ImageType }) => {
                                 letterSpacing="wide"
                                 textShadow="0 2px 4px rgba(0,0,0,0.3)"
                             >
-                                {image.user}
+                                {image.user.toUpperCase()}
                             </Text>
                         </Box>
 

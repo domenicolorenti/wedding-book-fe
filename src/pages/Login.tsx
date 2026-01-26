@@ -115,6 +115,7 @@ const Login = () => {
                                         border="0"
                                         _focus={{ ring: "2px", ringColor: appTheme.colors.primary, bg: "white" }}
                                         boxShadow="sm"
+                                        mt={2}
                                     />
                                     {displayError && (
                                         <Field.ErrorText color="red.500" fontSize="sm" mt={2}>

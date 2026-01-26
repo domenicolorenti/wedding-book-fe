@@ -1,4 +1,4 @@
-import { VStack, Text } from '@chakra-ui/react';
+import { VStack, Text, Box, Center, Spinner } from '@chakra-ui/react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Login, Home } from './pages';
 import { useAuth } from './hooks';
@@ -6,40 +6,70 @@ import { AuthProvider } from './contexts/AuthContext';
 import { appTheme } from './config/theme';
 import ErrorBoundary from './components/ErrorBoundary';
 import { Toaster } from './components/ui/toaster';
+import bgImage from './assets/bg-no-flowers.svg';
 
 function AppContent() {
   const { user, loading } = useAuth();
 
   if (loading) {
     return (
-      <VStack
+      <Center
         bg={appTheme.colors.background}
         minH="100vh"
-        justify="center"
-        align="center"
         color={appTheme.colors.text}
-        fontFamily="Serif"
       >
-        <Text fontSize="2xl">Caricamento...</Text>
-      </VStack>
+        <VStack gap={4}>
+          <Spinner size="xl" color={appTheme.colors.primary} css={{ '--spinner-track-color': 'rgba(0,0,0,0.1)' }} />
+          <Text fontSize="lg" fontFamily="serif" letterSpacing="widest">WEDDING BOOK</Text>
+        </VStack>
+      </Center>
     );
   }
 
+  const globalStyles = {
+    '&::-webkit-scrollbar': {
+      width: '6px',
+    },
+    '&::-webkit-scrollbar-track': {
+      background: 'transparent',
+    },
+    '&::-webkit-scrollbar-thumb': {
+      background: 'rgba(0,0,0,0.1)',
+      borderRadius: '3px',
+    },
+    '::selection': {
+      background: appTheme.colors.primary,
+      color: 'white',
+    },
+  };
+
   return (
     <AuthProvider user={user}>
-      <VStack
+      <Box
+        position="fixed"
+        top={0}
+        left={0}
+        w="100%"
+        h="100%"
+        zIndex={-1}
         bg={appTheme.colors.background}
-        py="8"
+        backgroundImage={`url(${bgImage})`}
+        backgroundSize="cover"
+        backgroundPosition="center"
+        backgroundRepeat="no-repeat"
+      />
+      <Box
         color={appTheme.colors.text}
         fontFamily="Serif"
         minH="100vh"
+        css={globalStyles}
       >
         <Routes>
           <Route path="/wedding-book-fe/login" element={<Login />} />
           <Route path="/wedding-book-fe" element={<Home />} />
           <Route path="*" element={<Navigate to="/wedding-book-fe" replace />} />
         </Routes>
-      </VStack>
+      </Box>
       <Toaster />
     </AuthProvider>
   );

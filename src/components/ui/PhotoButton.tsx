@@ -1,7 +1,5 @@
-import { Text, Button, Icon, Spinner } from '@chakra-ui/react';
-import { Menu } from '@chakra-ui/react';
+import { Text, Button, Icon, Spinner, Flex } from '@chakra-ui/react';
 import { CiCamera } from 'react-icons/ci';
-import { FaCamera } from 'react-icons/fa6';
 import { GrGallery } from 'react-icons/gr';
 import { useRef, useState, useContext } from 'react';
 import { compressImage } from '@/utils/imageCompression';
@@ -86,75 +84,61 @@ const PhotoButton = () => {
     };
 
     return (
-        <Menu.Root>
-            <Menu.Trigger asChild>
-                <Button
-                    bg={appTheme.colors.primary}
-                    color="gray.900"
-                    rounded="2xl"
-                    py={6}
-                    my={4}
-                    fontSize="2xl"
-                    outline="none"
-                    _hover={{ bg: '#98AA97' }}
-                    _active={{ bg: 'orange.100', shadow: '2xl' }}
-                    disabled={uploading}
-                    minH="60px"
-                    aria-label="Aggiungi una foto"
-                >
-                    {uploading ? (
-                        <Spinner size="md" />
-                    ) : (
-                        <>
-                            <Icon as={CiCamera} boxSize={9} />
-                            <Text>Aggiungi una foto</Text>
-                        </>
-                    )}
-                </Button>
-            </Menu.Trigger>
-            <Menu.Positioner>
-                <Menu.Content
-                    rounded="2xl"
-                    bg="white"
-                    boxShadow="xl"
-                    py={2}
-                    px={1}
-                    minW="220px"
-                >
-                    <Menu.Item
-                        value="camera"
-                        onClick={handleCamera}
-                        fontSize="xl"
-                        color="gray.900"
-                        _hover={{ bg: 'orange.50' }}
-                        rounded="lg"
-                        py={3}
-                        display="flex"
-                        alignItems="center"
-                        gap={3}
-                        disabled={uploading}
-                    >
-                        <FaCamera />
-                        <Text>Fotocamera</Text>
-                    </Menu.Item>
-                    <Menu.Item
-                        value="gallery"
-                        onClick={handleGallery}
-                        fontSize="xl"
-                        color="gray.900"
-                        _hover={{ bg: 'orange.50' }}
-                        rounded="lg"
-                        py={3}
-                        display="flex"
-                        alignItems="center"
-                        gap={3}
-                        disabled={uploading}
-                    >
-                        <GrGallery />
+        <Flex gap={3} w="full">
+            <Button
+                flex={1}
+                bg={appTheme.colors.primary}
+                color="gray.900"
+                rounded="2xl"
+                py={7}
+                fontSize="lg"
+                fontWeight="semibold"
+                shadow="lg"
+                _hover={{ transform: 'translateY(-2px)', shadow: 'xl', opacity: 0.9 }}
+                _active={{ transform: 'translateY(0)', shadow: 'md' }}
+                transition="all 0.2s"
+                disabled={uploading}
+                onClick={handleCamera}
+                aria-label="Scatta una foto"
+            >
+                {uploading ? (
+                    <Spinner size="sm" color="gray.900" />
+                ) : (
+                    <>
+                        <Icon as={CiCamera} boxSize={7} mr={2} strokeWidth={1} />
+                        <Text>Scatta</Text>
+                    </>
+                )}
+            </Button>
+
+            <Button
+                flex={1}
+                bg="white"
+                color="gray.900"
+                rounded="2xl"
+                py={7}
+                fontSize="lg"
+                fontWeight="semibold"
+                shadow="lg"
+                border="1px solid"
+                borderColor="gray.100"
+                _hover={{ transform: 'translateY(-2px)', shadow: 'xl', bg: "gray.50" }}
+                _active={{ transform: 'translateY(0)', shadow: 'md' }}
+                transition="all 0.2s"
+                disabled={uploading}
+                onClick={handleGallery}
+                aria-label="Carica dalla galleria"
+            >
+                {uploading ? (
+                    <Spinner size="sm" color="gray.900" />
+                ) : (
+                    <>
+                        <Icon as={GrGallery} boxSize={5} mr={2} />
                         <Text>Galleria</Text>
-                    </Menu.Item>
-                </Menu.Content>
-            </Menu.Positioner>
+                    </>
+                )}
+            </Button>
+
             <input
                 type="file"
                 accept="image/*"
@@ -174,7 +158,7 @@ const PhotoButton = () => {
                 disabled={uploading}
                 aria-label="Carica foto dalla galleria"
             />
-        </Menu.Root>
+        </Flex>
     );
 };
 

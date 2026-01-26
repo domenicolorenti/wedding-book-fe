@@ -1,11 +1,12 @@
 import { Tabs } from '@/components/ui';
 import PhotoButton from '@/components/ui/PhotoButton';
-import { VStack, Text, Flex } from '@chakra-ui/react';
+import { VStack, Text, Flex, Box, Container, Separator } from '@chakra-ui/react';
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '@/contexts/AuthContext';
 import { PhotoProvider } from '@/contexts/PhotoContext';
 import { usePhotos } from '@/hooks';
+import { appTheme } from '@/config/theme';
 
 const Home = () => {
     const navigate = useNavigate();
@@ -20,38 +21,52 @@ const Home = () => {
 
     return (
         <PhotoProvider value={photosData}>
-            <VStack pos="relative" w="full">
-                {/* Header with welcome and logout */}
-                <Flex w="90%" justify="space-between" align="center" mb={4}>
-                    <Flex align="center" gap={2}>
-                        <Text fontSize="lg">Benvenuto/a</Text>
-                        <Text fontSize="lg" fontWeight="bold">
-                            {user}
-                        </Text>
-                        !
+            <Box w="full">
+                <Container maxW="4xl" pt={{ base: 6, md: 12 }} pb={8} px={{ base: 4, md: 8 }}>
+                    {/* Header with welcome and logout */}
+                    <Flex justify="space-between" align="center" mb={12}>
+                        <VStack align="start" gap={0}>
+                            <Text fontSize="xs" fontWeight="bold" letterSpacing="0.2em" textTransform="uppercase" color="gray.500">
+                                Wedding Book
+                            </Text>
+                            <Text fontSize="xl" fontFamily="serif">
+                                Ciao, {user}
+                            </Text>
+                        </VStack>
                     </Flex>
-                </Flex>
 
-                {/* Title */}
-                <Text fontSize="5xl" fontWeight="bold" mb={2}>
-                    Wedding Book
-                </Text>
+                    {/* Hero Section */}
+                    <VStack gap={8} align="center" textAlign="center" mb={16}>
+                        <Box>
+                            <Text fontSize={{ base: "5xl", md: "7xl" }} lineHeight="1" fontFamily="serif" mb={2}>
+                                Cattura ogni
+                            </Text>
+                            <Text fontSize={{ base: "5xl", md: "7xl" }} lineHeight="1" fontFamily="serif" fontStyle="italic" color={appTheme.colors.primary}>
+                                emozione
+                            </Text>
+                        </Box>
+                        
+                        <Text fontSize="lg" color="gray.600" maxW="md">
+                            Contribuisci al racconto di questa giornata speciale. Scatta una foto e condividila con noi!
+                        </Text>
 
-                <Text fontSize="3xl" mt={4}>
-                    Condividi le tue foto
-                </Text>
-                <Text fontSize="lg" color="gray.600">
-                    Scatta una foto e condividila!
-                </Text>
+                        <Box w="full" maxW="sm" mt={4}>
+                            <PhotoButton />
+                        </Box>
+                    </VStack>
 
-                <PhotoButton />
+                    {/* Gallery Title */}
+                    <Flex align="center" gap={4}>
+                        <Text fontSize="2xl" fontFamily="serif">Le Foto</Text>
+                        <Box h="1px" flex={1} bg="gray.400" />
+                    </Flex>
+                </Container>
 
-                <Text fontSize="3xl" mt={6}>
-                    Le Foto
-                </Text>
-
-                <Tabs />
-            </VStack>
+                {/* Gallery Section - Full Width */}
+                <Box w="full" px={{ base: 0, md: 4 }}>
+                    <Tabs />
+                </Box>
+            </Box>
         </PhotoProvider>
     );
 };

@@ -5,7 +5,11 @@ import { useAuth } from '@/hooks';
 import { appTheme } from '@/config/theme';
 import { toaster } from '@/components/ui/toaster';
 import logo from "@/assets/logo.svg"
+
 const Login = () => {
+
+    const url = import.meta.env.VITE_BE_URL;
+
     const navigate = useNavigate();
     const { login, loading, error: authError, isAuthenticated } = useAuth();
     const [username, setUsername] = useState('');
@@ -66,7 +70,7 @@ const Login = () => {
                             <Box textAlign="center" mb={4}>
                                 <Text fontSize="3xl" fontFamily="serif" mb={2}>Benvenuto</Text>
                                 <Text color="gray.500" fontSize="sm" lineHeight="relaxed">
-                                    Partecipa al racconto del nostro matrimonio.
+                                    Partecipa al racconto del nostro matrimonio. {url}
                                     <br />
                                     Carica le tue foto più belle!
                                 </Text>

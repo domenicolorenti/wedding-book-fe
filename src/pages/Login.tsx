@@ -66,7 +66,7 @@ const Login = () => {
                             <Box textAlign="center" mb={4}>
                                 <Text fontSize="3xl" fontFamily="serif" mb={2}>Benvenuto</Text>
                                 <Text color="gray.500" fontSize="sm" lineHeight="relaxed">
-                                     al racconto del nostro matrimonio.
+                                    Partecipa al racconto del nostro matrimonio.
                                     <br />
                                     Carica le tue foto più belle!
                                 </Text>

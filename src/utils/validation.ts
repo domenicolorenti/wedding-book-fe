@@ -36,7 +36,7 @@ export const sanitizeUsername = (username: string): string => {
  * Validates image file
  */
 export const validateImageFile = (file: File): { valid: boolean; error?: string } => {
-  const maxSize = 10 * 1024 * 1024; // 10MB
+  const maxSize = 50 * 1024 * 1024; // 50MB
   const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/heic'];
 
   if (!allowedTypes.includes(file.type)) {
@@ -44,9 +44,8 @@ export const validateImageFile = (file: File): { valid: boolean; error?: string 
   }
 
   if (file.size > maxSize) {
-    return { valid: false, error: 'Immagine troppo grande. Massimo 10MB' };
+    return { valid: false, error: 'Immagine troppo grande. Massimo 50MB' };
   }
 
   return { valid: true };
 };
-

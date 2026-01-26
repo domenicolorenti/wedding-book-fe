@@ -15,8 +15,7 @@ import { FiAlertCircle, FiCheckCircle, FiInfo } from "react-icons/fi"
 
 export const toaster = createToaster({
   placement: "top",
-  pauseOnPageIdle: true,
-  duration: 4000,
+  duration: 2000,
 })
 
 const ToastIcon = ({ type }: { type: string | undefined }) => {

@@ -30,7 +30,7 @@ const Home = () => {
                                 Wedding Book
                             </Text>
                             <Text fontSize="xl" fontFamily="serif">
-                                Ciao, {user}
+                                Ciao, {user.toUpperCase()}
                             </Text>
                         </VStack>
                     </Flex>

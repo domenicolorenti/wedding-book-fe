@@ -1,3 +1,12 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: ["main"] # Cambia in "master" se necessario
+
+permissions:
+  contents: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -5,15 +14,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install and Build
         run: |
           npm install
           npm run build
         env:
-          # Qui mappi il secret di GitHub alla variabile d'ambiente della build
-          VITE_BE_URL: ${{ secrets.VITE_BE_URL }}
+          # Qui avviene la magia: GitHub inietta il Secret nella variabile d'ambiente
+          VITE_APP_BACKEND_URL: ${{ secrets.VITE_BE_URL }}
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist # o 'build', a seconda del tuo framework
+          folder: dist # O 'build', controlla la cartella prodotta dal tuo framework
+          branch: gh-pages

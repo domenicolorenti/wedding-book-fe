@@ -1,12 +1,10 @@
-import { Fieldset, Stack, Field, Input, Button, Spinner, Box, Flex, Text, Icon } from '@chakra-ui/react';
+import { Fieldset, Stack, Field, Input, Button, Spinner, Box, Flex, Text, Image } from '@chakra-ui/react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks';
 import { appTheme } from '@/config/theme';
 import { toaster } from '@/components/ui/toaster';
-import { IoLogoJavascript } from 'react-icons/io';
-import { IoLogoGitlab } from 'react-icons/io5';
-
+import logo from "@/assets/logo.svg"
 const Login = () => {
     const navigate = useNavigate();
     const { login, loading, error: authError, isAuthenticated } = useAuth();
@@ -48,18 +46,20 @@ const Login = () => {
 
     return (
         <Flex direction="column" gap={8} align="center" justify="center" minH="80vh" px={4} w="full">
-            <Icon boxSize={"72px"} as={IoLogoGitlab}/>
+            
             <Box
                 w="full"
                 maxW="md"
                 bg="white/80"
                 backdropFilter="blur(20px)"
                 p={{ base: 8, md: 10 }}
+                pt={0}
                 borderRadius="3xl"
                 boxShadow="2xl"
                 border="1px solid"
                 borderColor="white"
             >
+                <Image height={"160px"} src={logo} mx={"auto"}/>
                 <form onSubmit={handleSubmit}>
                     <Fieldset.Root size="lg" w="full">
                         <Stack gap={6} w="full">

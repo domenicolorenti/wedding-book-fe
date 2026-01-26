@@ -1,0 +1,19 @@
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build
+        run: |
+          npm install
+          npm run build
+        env:
+          # Qui mappi il secret di GitHub alla variabile d'ambiente della build
+          VITE_BE_URL: ${{ secrets.VITE_BE_URL }}
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: dist # o 'build', a seconda del tuo framework

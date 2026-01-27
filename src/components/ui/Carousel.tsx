@@ -133,6 +133,9 @@ export const ImageCarousel = ({ photo }: { photo: ImageType }) => {
                                 alt={`Foto di ${image.user}`}
                                 opacity={imageLoadStates[image._id] ? 1 : 0}
                                 transition="opacity 0.4s ease-in-out"
+                                pointerEvents="none"
+                                userSelect="none"
+                                draggable={false}
                             />
                         </Box>
 

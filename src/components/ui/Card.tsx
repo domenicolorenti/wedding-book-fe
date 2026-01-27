@@ -75,6 +75,9 @@ const Card = ({ photo }: CardProps) => {
                                 alt={`Foto di ${photo.user}`}
                                 transition="transform 0.5s"
                                 _groupHover={{ transform: 'scale(1.1)' }}
+                                pointerEvents="none"
+                                userSelect="none"
+                                draggable={false}
                             />
                         )}
                         <Box 

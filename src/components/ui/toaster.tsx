@@ -36,9 +36,10 @@ const ToastIcon = ({ type }: { type: string | undefined }) => {
 export const Toaster = () => {
   return (
     <Portal>
-      <ChakraToaster toaster={toaster} gap={3} inset={{ base: "4", md: "6" }}>
+      <ChakraToaster toaster={toaster} gap={3} inset={{ base: "4", md: "6" }} pointerEvents="none">
         {(toast) => (
           <Toast.Root
+            pointerEvents="auto"
             bg="white/95"
             backdropFilter="blur(20px)"
             p={4}

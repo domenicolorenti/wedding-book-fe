@@ -36,7 +36,7 @@ export const sanitizeUsername = (username: string): string => {
  * Validates image file
  */
 export const validateImageFile = (file: File): { valid: boolean; error?: string } => {
-  const maxSize = 50 * 1024 * 1024; // 50MB
+  const maxSize = 30 * 1024 * 1024; // 30MB
   const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/heic'];
 
   if (!allowedTypes.includes(file.type)) {

@@ -29,13 +29,12 @@ const Card = ({ photo }: CardProps) => {
             <Drawer.Trigger asChild>
                 <Button
                     role="group"
-                    bg="white"
-                    rounded="none"
+                    rounded="xl"
+                    shadow="sm"
                     p={0}
                     w="full"
                     h="auto"
                     overflow="hidden"
-                    _hover={{ filter: 'brightness(0.95)' }}
                     transition="all 0.3s ease"
                     border="none"
                 >

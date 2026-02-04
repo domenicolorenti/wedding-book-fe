@@ -86,7 +86,7 @@ const Login = () => {
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
                                         rounded="xl"
-                                        size="xl"
+                                        size="md"
                                         type="text"
                                         placeholder="Nome"
                                         disabled={loading}
@@ -104,7 +104,7 @@ const Login = () => {
                                         value={surname}
                                         onChange={(e) => setSurname(e.target.value)}
                                         rounded="xl"
-                                        size="xl"
+                                        size="md"
                                         type="text"
                                         placeholder="Cognome"
                                         disabled={loading}

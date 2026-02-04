@@ -1,4 +1,4 @@
-import { VStack, Text, Box, Center, Spinner } from '@chakra-ui/react';
+import { VStack, Text, Box, Center, Spinner, Flex } from '@chakra-ui/react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { Login, Home } from './pages';
 import { useAuth } from './hooks';
@@ -58,18 +58,31 @@ function AppContent() {
         backgroundPosition="center"
         backgroundRepeat="no-repeat"
       />
-      <Box
+      <Flex
+        direction="column"
         color={appTheme.colors.text}
         fontFamily="Serif"
         minH="100vh"
         css={globalStyles}
       >
-        <Routes>
-          <Route path="/wedding-book-fe/login" element={<Login />} />
-          <Route path="/wedding-book-fe" element={<Home />} />
-          <Route path="*" element={<Navigate to="/wedding-book-fe" replace />} />
-        </Routes>
-      </Box>
+        <Box flex="1">
+          <Routes>
+            <Route path="/wedding-book-fe/login" element={<Login />} />
+            <Route path="/wedding-book-fe" element={<Home />} />
+            <Route path="*" element={<Navigate to="/wedding-book-fe" replace />} />
+          </Routes>
+        </Box>
+        <Box py={8} textAlign="center">
+          <VStack gap={0}>
+            <Text fontSize="xs" letterSpacing="0.2em" textTransform="uppercase" opacity={0.6}>
+              Wedding Book
+            </Text>
+            <Text fontSize="10px" opacity={0.4} mt={1}>
+              Creato da Domenico Lorenti
+            </Text>
+          </VStack>
+        </Box>
+      </Flex>
       <Toaster />
     </AuthProvider>
   );

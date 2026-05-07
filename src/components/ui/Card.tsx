@@ -4,7 +4,6 @@ import { useState, memo } from 'react';
 import { ImageCarousel } from '.';
 import { type Image } from '@/types';
 import { apiService } from '@/services/api';
-import { appTheme } from '@/config/theme';
 
 interface CardProps {
     photo: Image;

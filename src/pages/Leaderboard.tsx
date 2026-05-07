@@ -114,7 +114,7 @@ const Leaderboard = () => {
             try {
                 const res = await apiService.getPhotos();
                 const all = res.data?.data as Image[];
-                const sorted = [...all].sort((a, b) => b.likes.length - a.likes.length);
+                const sorted = [...all].sort((a, b) => b.likes.length - a.likes.length).slice(0, 10);
                 setPhotos(sorted);
             } catch {
                 // silent fail

@@ -150,7 +150,8 @@ const PhotoGrid: React.FC<PhotoGridProps> = ({ active, photos }) => {
                                     rounded="full"
                                     fontSize="sm"
                                     fontWeight={isActive ? "bold" : "medium"}
-                                    shadow={isActive ? "md" : "none"}
+                                    border={isActive ? "1px solid" : "1px solid transparent"}
+                                    borderColor={isActive ? "#D9D3CD" : "transparent"}
                                     transition="all 0.2s"
                                 >
                                     {page}

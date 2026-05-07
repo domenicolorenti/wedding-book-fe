@@ -69,9 +69,8 @@ const RankRow = memo(({ photo, position }: { photo: Image; position: number }) =
             rounded="xl"
             border={isPodium ? '2px solid' : '1px solid'}
             borderColor={medal ? medal.border : 'gray.100'}
-            boxShadow={isPodium ? `0 3px 14px ${medal!.border}35` : undefined}
             transition="all 0.2s"
-            _hover={{ shadow: 'sm' }}
+            _hover={{}}
             align="center"
         >
             <Text

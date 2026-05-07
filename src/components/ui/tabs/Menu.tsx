@@ -31,9 +31,8 @@ export const Menu = ({ setActive, active, fetchImages }: MenuProps) => {
             bg="white" 
             p={1.5} 
             rounded="full" 
-            shadow="lg" 
-            border="1px solid" 
-            borderColor="gray.100"
+            border="1px solid"
+            borderColor="#D9D3CD"
             gap={1}
             align="center"
             maxW="fit-content"

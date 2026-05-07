@@ -97,9 +97,9 @@ const Login = () => {
                                         aria-label="Inserisci nome e cognome"
                                         maxLength={50}
                                         bg="white"
-                                        border="0"
+                                        border="1"
+                                        borderColor="#D9D3CD"
                                         _focus={{ ring: "2px", ringColor: appTheme.colors.primary, bg: "white" }}
-                                        boxShadow="sm"
                                     />
                                     {displayError && (
                                         <Field.ErrorText color="red.500" fontSize="sm" mt={2}>
@@ -116,11 +116,12 @@ const Login = () => {
                                 py={7}
                                 fontSize="lg"
                                 fontWeight="semibold"
-                                shadow="lg"
                                 bg={appTheme.colors.primary}
                                 color="gray.900"
-                                _hover={{ transform: 'translateY(-2px)', shadow: 'xl', opacity: 0.9 }}
-                                _active={{ transform: 'translateY(0)', shadow: 'md' }}
+                                border="1px solid"
+                                borderColor="#D9D3CD"
+                                _hover={{ transform: 'translateY(-2px)', opacity: 0.9 }}
+                                _active={{ transform: 'translateY(0)' }}
                                 transition="all 0.2s"
                                 disabled={loading || !username.trim()}
                             >

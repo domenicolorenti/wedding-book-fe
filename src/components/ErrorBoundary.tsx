@@ -43,7 +43,8 @@ class ErrorBoundary extends Component<Props, State> {
             bg="white"
             p={8}
             rounded="2xl"
-            shadow="lg"
+            border="1px solid"
+            borderColor="#D9D3CD"
             maxW="md"
             textAlign="center"
           >

@@ -29,13 +29,13 @@ const Card = ({ photo }: CardProps) => {
                 <Button
                     role="group"
                     rounded="xl"
-                    shadow="sm"
                     p={0}
                     w="full"
                     h="auto"
                     overflow="hidden"
                     transition="all 0.3s ease"
-                    border="none"
+                    border="1px solid"
+                    borderColor="#D9D3CD"
                 >
                     <VStack gap={0} w="full" position="relative" h="full">
                         {!imageLoaded && !imageError && (

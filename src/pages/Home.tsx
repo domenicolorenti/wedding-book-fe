@@ -68,9 +68,8 @@ const Home = () => {
                             px={4}
                             fontFamily="serif"
                             fontWeight="medium"
-                            shadow="sm"
-                            _hover={{ transform: 'translateY(-1px)', shadow: 'md', borderColor: appTheme.colors.primary }}
-                            _active={{ transform: 'translateY(0)', shadow: 'sm' }}
+                            _hover={{ transform: 'translateY(-1px)', borderColor: appTheme.colors.primary }}
+                            _active={{ transform: 'translateY(0)' }}
                             transition="all 0.2s"
                             onClick={() => navigate('/leaderboard')}
                         >

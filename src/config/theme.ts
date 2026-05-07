@@ -18,9 +18,9 @@ export const appTheme = {
     md: 'xl',
     lg: '2xl',
   },
-  shadows: {
-    card: 'md',
-    button: '2xl',
+  border: {
+    color: '#D9D3CD',
+    width: '1px',
   },
 } as const;
 

@@ -30,7 +30,7 @@ const Home = () => {
                             Wedding Book
                         </Text>
                         <Text fontSize="xl" fontFamily="serif">
-                            Ciao, {user.toUpperCase()}
+                            Ciao, {user.split(' ')[0].charAt(0).toUpperCase() + user.split(' ')[0].slice(1).toLowerCase()}
                         </Text>
                     </VStack>
 

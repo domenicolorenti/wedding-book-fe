@@ -7,7 +7,7 @@ import { BrowserRouter } from 'react-router-dom'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <Provider>
-      <BrowserRouter basename='/'>
+      <BrowserRouter basename='/wedding-book-fe'>
         <App />
       </BrowserRouter>
     </Provider>

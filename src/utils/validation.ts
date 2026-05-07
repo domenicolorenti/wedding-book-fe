@@ -44,7 +44,7 @@ export const validateImageFile = (file: File): { valid: boolean; error?: string 
   }
 
   if (file.size > maxSize) {
-    return { valid: false, error: 'Immagine troppo grande. Massimo 50MB' };
+    return { valid: false, error: 'Immagine troppo grande. Massimo 30MB' };
   }
 
   return { valid: true };

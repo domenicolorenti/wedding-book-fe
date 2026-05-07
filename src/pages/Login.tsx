@@ -8,15 +8,11 @@ import logo from "@/assets/logo.svg"
 
 const Login = () => {
 
-    const url = import.meta.env.VITE_BE_URL;
-
     const navigate = useNavigate();
     const { login, loading, error: authError, isAuthenticated } = useAuth();
     const [username, setUsername] = useState('');
-    const [surname, setSurname] = useState('');
     const [localError, setLocalError] = useState('');
 
-    // Redirect if already authenticated
     useEffect(() => {
         if (isAuthenticated) {
             navigate('/wedding-book-fe');
@@ -27,7 +23,7 @@ const Login = () => {
         e.preventDefault();
         setLocalError('');
 
-        const result = await login(username+" "+surname);
+        const result = await login(username);
 
         if (!result?.success) {
             setLocalError(result?.error || 'Errore durante il login');
@@ -50,8 +46,15 @@ const Login = () => {
     const displayError = localError || authError;
 
     return (
-        <Flex direction="column" gap={8} align="center" justify="center" minH="80vh" px={4} w="full">
-
+        <Flex
+            direction="column"
+            align="center"
+            justify="center"
+            position="fixed"
+            inset={0}
+            px={4}
+            zIndex={10}
+        >
             <Box
                 w="full"
                 maxW="md"
@@ -81,41 +84,22 @@ const Login = () => {
                                 <Field.Root invalid={!!displayError}>
                                     <Field.Label fontSize="sm" fontWeight="medium" color="gray.700">Come ti chiami?</Field.Label>
                                     <Input
-                                        name="name"
+                                        name="fullname"
                                         fontSize="lg"
                                         value={username}
                                         onChange={(e) => setUsername(e.target.value)}
                                         rounded="xl"
                                         size="md"
                                         type="text"
-                                        placeholder="Nome"
+                                        placeholder="Nome e Cognome"
                                         disabled={loading}
                                         autoComplete="name"
-                                        aria-label="Inserisci il tuo nome"
+                                        aria-label="Inserisci nome e cognome"
                                         maxLength={50}
                                         bg="white"
                                         border="0"
                                         _focus={{ ring: "2px", ringColor: appTheme.colors.primary, bg: "white" }}
                                         boxShadow="sm"
-                                    />
-                                    <Input
-                                        name="name"
-                                        fontSize="lg"
-                                        value={surname}
-                                        onChange={(e) => setSurname(e.target.value)}
-                                        rounded="xl"
-                                        size="md"
-                                        type="text"
-                                        placeholder="Cognome"
-                                        disabled={loading}
-                                        autoComplete="surname"
-                                        aria-label="Inserisci il tuo cognome"
-                                        maxLength={50}
-                                        bg="white"
-                                        border="0"
-                                        _focus={{ ring: "2px", ringColor: appTheme.colors.primary, bg: "white" }}
-                                        boxShadow="sm"
-                                        mt={2}
                                     />
                                     {displayError && (
                                         <Field.ErrorText color="red.500" fontSize="sm" mt={2}>
@@ -138,7 +122,7 @@ const Login = () => {
                                 _hover={{ transform: 'translateY(-2px)', shadow: 'xl', opacity: 0.9 }}
                                 _active={{ transform: 'translateY(0)', shadow: 'md' }}
                                 transition="all 0.2s"
-                                disabled={loading || !username.trim()|| !surname.trim()}
+                                disabled={loading || !username.trim()}
                             >
                                 {loading ? <Spinner size="sm" color="gray.900" /> : 'Entra nel Wedding Book'}
                             </Button>

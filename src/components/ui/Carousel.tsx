@@ -128,7 +128,7 @@ export const ImageCarousel = ({ photo }: { photo: ImageType }) => {
                                 w="full"
                                 h="full"
                                 objectFit="contain"
-                                loading="eager"
+                                loading="lazy"
                                 onLoad={() => handleImageLoad(image._id)}
                                 alt={`Foto di ${image.user}`}
                                 opacity={imageLoadStates[image._id] ? 1 : 0}

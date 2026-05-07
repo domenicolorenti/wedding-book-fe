@@ -56,6 +56,7 @@ const PhotoThumb = memo(({ id, size }: { id: string; size: number }) => {
 
 const RankRow = memo(({ photo, position }: { photo: Image; position: number }) => {
     const medal = MEDAL[position];
+    const isPodium = position <= 3;
 
     return (
         <HStack
@@ -66,10 +67,12 @@ const RankRow = memo(({ photo, position }: { photo: Image; position: number }) =
             bg={medal ? medal.bg : 'white/65'}
             backdropFilter="blur(10px)"
             rounded="xl"
-            border="1px solid"
+            border={isPodium ? '2px solid' : '1px solid'}
             borderColor={medal ? medal.border : 'gray.100'}
+            boxShadow={isPodium ? `0 3px 14px ${medal!.border}35` : undefined}
             transition="all 0.2s"
             _hover={{ shadow: 'sm' }}
+            align="center"
         >
             <Text
                 w={6}
@@ -82,24 +85,23 @@ const RankRow = memo(({ photo, position }: { photo: Image; position: number }) =
             >
                 {medal ? medal.label : position}
             </Text>
-            <PhotoThumb id={photo._id} size={44} />
-            <Text
-                flex={1}
-                fontSize="sm"
-                fontWeight="medium"
-                color={appTheme.colors.text}
-                overflow="hidden"
-                textOverflow="ellipsis"
-                whiteSpace="nowrap"
-            >
-                {photo.user}
-            </Text>
-            <HStack gap={1.5} flexShrink={0}>
-                <Icon as={FaHeart} boxSize={3} color={medal ? medal.border : 'red.300'} />
-                <Text fontSize="sm" fontWeight="semibold" color={appTheme.colors.text}>
-                    {photo.likes.length}
+            <PhotoThumb id={photo._id} size={28} />
+            <VStack flex={1} gap={0.5} align="start" minW={0}>
+                <Text
+                    fontSize="sm"
+                    fontWeight={isPodium ? 'semibold' : 'medium'}
+                    color={appTheme.colors.text}
+                    lineHeight="short"
+                >
+                    {photo.user}
                 </Text>
-            </HStack>
+                <HStack gap={1.5}>
+                    <Icon as={FaHeart} boxSize={3} color={medal ? medal.border : 'red.300'} />
+                    <Text fontSize="xs" fontWeight="semibold" color={appTheme.colors.text}>
+                        {photo.likes.length}
+                    </Text>
+                </HStack>
+            </VStack>
         </HStack>
     );
 });

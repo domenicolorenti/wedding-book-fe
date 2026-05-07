@@ -15,7 +15,7 @@ const Login = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            navigate('/wedding-book-fe');
+            navigate('/');
         }
     }, [isAuthenticated, navigate]);
 

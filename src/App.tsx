@@ -7,6 +7,7 @@ import { appTheme } from './config/theme';
 import ErrorBoundary from './components/ErrorBoundary';
 import { Toaster } from './components/ui/toaster';
 import bgImage from './assets/bg-no-flowers.svg';
+import Leaderboard from './pages/Leaderboard';
 
 function AppContent() {
   const { user, loading } = useAuth();
@@ -67,9 +68,10 @@ function AppContent() {
       >
         <Box flex="1">
           <Routes>
-            <Route path="/wedding-book-fe/login" element={<Login />} />
-            <Route path="/wedding-book-fe" element={<Home />} />
-            <Route path="*" element={<Navigate to="/wedding-book-fe" replace />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<Home />} />
+            <Route path='/leaderboard' element={<Leaderboard />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Box>
         <Box py={8} textAlign="center">

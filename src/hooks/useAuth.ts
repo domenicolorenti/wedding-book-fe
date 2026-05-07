@@ -15,9 +15,8 @@ export const useAuth = () => {
     const savedUser = localStorage.getItem(STORAGE_KEY);
     if (savedUser) {
       setUser(savedUser);
-      navigate('/wedding-book-fe');
     } else {
-      navigate('/wedding-book-fe/login');
+      navigate('/login');
     }
     setLoading(false);
   }, [navigate]);
@@ -43,7 +42,7 @@ export const useAuth = () => {
       if (response.status === 201) {
         localStorage.setItem(STORAGE_KEY, sanitizedUsername);
         setUser(sanitizedUsername);
-        navigate('/wedding-book-fe');
+        navigate('/');
         return { success: true };
       }
     } catch (err) {

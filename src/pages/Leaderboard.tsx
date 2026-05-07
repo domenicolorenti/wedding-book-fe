@@ -190,10 +190,50 @@ const Leaderboard = () => {
                         </Text>
                     </VStack>
                 ) : (
-                    <VStack gap={3} align="stretch">
-                        {photos.map((photo, i) => (
-                            <RankRow key={photo._id} photo={photo} position={i + 1} />
-                        ))}
+                    <VStack gap={4} align="stretch">
+                        {/* Podio */}
+                        <Box
+                            bg="white/60"
+                            backdropFilter="blur(12px)"
+                            rounded="2xl"
+                            border="1px solid"
+                            borderColor="gray.200"
+                            overflow="hidden"
+                        >
+                            <Flex
+                                px={4}
+                                py={3}
+                                borderBottom="1px solid"
+                                borderColor="gray.100"
+                                align="center"
+                                gap={2}
+                            >
+                                <Text fontSize="lg">🏆</Text>
+                                <Text
+                                    fontSize="sm"
+                                    fontWeight="bold"
+                                    letterSpacing="0.15em"
+                                    textTransform="uppercase"
+                                    color="gray.500"
+                                >
+                                    Podio
+                                </Text>
+                            </Flex>
+                            <VStack gap={2} align="stretch" p={3}>
+                                {photos.slice(0, 3).map((photo, i) => (
+                                    <RankRow key={photo._id} photo={photo} position={i + 1} />
+                                ))}
+                            </VStack>
+                        </Box>
+
+                        {/* Resto della classifica */}
+                        {photos.length > 3 && (
+                            <VStack gap={2} align="stretch">
+                                {photos.slice(3).map((photo, i) => (
+                                    <RankRow key={photo._id} photo={photo} position={i + 4} />
+                                ))}
+                            </VStack>
+                        )}
                     </VStack>
                 )}
             </Container>
